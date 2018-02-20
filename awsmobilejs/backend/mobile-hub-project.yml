@@ -1,0 +1,21 @@
+--- !com.amazonaws.mobilehub.v0.Project 
+features:
+  cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
+    components:
+      dev-dymek: !com.amazonaws.mobilehub.v0.API 
+        attributes:
+          api-arn: 'arn:aws:execute-api:eu-central-1:125848050530:etwqvs3xol'
+          name: dev-dymek
+          sdk-generation-stage-name: dev
+        paths:
+          '/api/{proxy+}': !com.amazonaws.mobilehub.v0.Function {}
+  content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
+    attributes:
+      enabled: true
+      visibility: public-global
+    components:
+      release: !com.amazonaws.mobilehub.v0.Bucket {}
+  mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint {}
+  sign-in: !com.amazonaws.mobilehub.v0.SignIn {}
+name: dymek-web
+region: eu-central-1
