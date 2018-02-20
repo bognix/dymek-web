@@ -5,9 +5,10 @@ import NotFound from './components/NotFound'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import React from 'react'
 
-export default () => (
+export default ({children}) => (
     <BrowserRouter>
         <div>
+            {children}
             <Switch>
                 <Route exact path="/" component={Main}/>
                 <Route path="/map" component={MapView}/>
