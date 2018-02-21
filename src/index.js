@@ -1,15 +1,17 @@
+/* eslint react/jsx-filename-extension: "off" */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const AppThemed = () => (
-    <MuiThemeProvider>
-        <App/>
-    </MuiThemeProvider>
-)
+  <MuiThemeProvider>
+    <App />
+  </MuiThemeProvider>
+);
 
 ReactDOM.render(<AppThemed />, document.getElementById('root'));
 registerServiceWorker();

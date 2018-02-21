@@ -1,0 +1,7 @@
+config/
+src/registerServiceWorker.js
+src/aws-exports.js
+node_modules/
+build/
+scripts/
+*.test.js

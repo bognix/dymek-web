@@ -1,0 +1,10 @@
+{
+    "extends": "airbnb",
+    "env": {
+        "browser": true
+    },
+    "rules": {
+        "react/forbid-prop-types": [1, { "forbid": ["array", "any"]}],
+        "react/prop-types": 1
+    }
+}

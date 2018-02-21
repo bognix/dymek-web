@@ -1,5 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default () => (
-    <div>nie ma mnie</div>
-)
+  <div>nie ma mnie</div>
+);

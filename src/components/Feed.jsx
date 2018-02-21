@@ -1,5 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default () => (
-    <div>tutaj bedzie feed</div>
-)
+  <div>tutaj bedzie feed</div>
+);
