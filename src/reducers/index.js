@@ -16,6 +16,18 @@ const markersReducer = (state = initialMarkersState, { type, payload }) => {
         list: payload.items,
         meta: payload.meta,
       };
+    case MARKERS.CREATE_SUCCESS:
+      return {
+        ...state,
+        list: [
+          payload,
+          ...state.list,
+        ],
+        meta: {
+          ...state.meta,
+          total: state.meta.total + 1,
+        },
+      };
     default:
       return state;
   }

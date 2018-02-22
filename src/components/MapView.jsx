@@ -14,10 +14,13 @@ const MyMapComponent = compose(
   withGeolocation,
   withScriptjs,
   withGoogleMap,
-)(({ latitude, longitude, markers }) => (
+)(({
+  latitude, longitude, markers, addMarker,
+}) => (
   <GoogleMap
     defaultZoom={8}
     defaultCenter={{ lat: latitude, lng: longitude }}
+    onClick={payload => addMarker(payload)}
   >
     {markers.map(coords => (
       <Marker
