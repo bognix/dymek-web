@@ -1,5 +1,6 @@
 import { GoogleMap, Marker, withScriptjs, withGoogleMap } from 'react-google-maps';
 import { compose, withProps } from 'recompose';
+import { MarkerClusterer } from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import React from 'react';
 
 import withGeolocation from '../hocs/withGeolocation';
@@ -22,12 +23,18 @@ const MyMapComponent = compose(
     defaultCenter={{ lat: latitude, lng: longitude }}
     onClick={payload => addMarker(payload)}
   >
-    {markers.map(coords => (
-      <Marker
-        position={{ lat: Number(coords.latitude), lng: Number(coords.longitude) }}
-        key={coords.id}
-      />
-    ))}
+    <MarkerClusterer
+      averageCenter
+      enableRetinaIcons
+      gridSize={60}
+    >
+      {markers.map(coords => (
+        <Marker
+          position={{ lat: Number(coords.latitude), lng: Number(coords.longitude) }}
+          key={coords.id}
+        />
+      ))}
+    </MarkerClusterer>
   </GoogleMap>
 ));
 
