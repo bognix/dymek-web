@@ -6,24 +6,22 @@
 
 // AWS Mobile Hub Project Constants
 const awsmobile = {
-  aws_app_analytics: 'enable',
-  aws_cloud_logic: 'enable',
-  aws_cloud_logic_custom: [{
-    id: 'etwqvs3xol', name: 'dev-dymek', description: '', endpoint: 'https://etwqvs3xol.execute-api.eu-central-1.amazonaws.com/dev', region: 'eu-central-1', paths: ['/api/123'],
-  }],
-  aws_cognito_identity_pool_id: 'eu-central-1:228e070a-b1c2-4f6c-9a17-9490e42e2f71',
-  aws_cognito_region: 'eu-central-1',
-  aws_content_delivery: 'enable',
-  aws_content_delivery_bucket: 'dymekweb-hosting-mobilehub-1921189089',
-  aws_content_delivery_bucket_region: 'eu-central-1',
-  aws_content_delivery_cloudfront: 'enable',
-  aws_content_delivery_cloudfront_domain: 'deevjjctzmtc1.cloudfront.net',
-  aws_mobile_analytics_app_id: 'e61131543d0a4d6e825ab04d92b27390',
-  aws_mobile_analytics_app_region: 'us-east-1',
-  aws_project_id: '8c6d73a3-162e-11e8-8579-61249e9e72d2',
-  aws_project_name: 'dymek-web',
-  aws_project_region: 'eu-central-1',
-  aws_resource_name_prefix: 'dymekweb-mobilehub-1921189089',
-};
+    'aws_app_analytics': 'enable',
+    'aws_cloud_logic': 'enable',
+    'aws_cloud_logic_custom': [{"id":"1t8rff8ana","name":"dev-dymek-api","description":"","endpoint":"https://1t8rff8ana.execute-api.eu-central-1.amazonaws.com/dev","region":"eu-central-1","paths":["/api/123"]}],
+    'aws_cognito_identity_pool_id': 'eu-central-1:228e070a-b1c2-4f6c-9a17-9490e42e2f71',
+    'aws_cognito_region': 'eu-central-1',
+    'aws_content_delivery': 'enable',
+    'aws_content_delivery_bucket': 'dymekweb-hosting-mobilehub-1921189089',
+    'aws_content_delivery_bucket_region': 'eu-central-1',
+    'aws_content_delivery_cloudfront': 'enable',
+    'aws_content_delivery_cloudfront_domain': 'deevjjctzmtc1.cloudfront.net',
+    'aws_mobile_analytics_app_id': 'e61131543d0a4d6e825ab04d92b27390',
+    'aws_mobile_analytics_app_region': 'us-east-1',
+    'aws_project_id': '8c6d73a3-162e-11e8-8579-61249e9e72d2',
+    'aws_project_name': 'dymek-web',
+    'aws_project_region': 'eu-central-1',
+    'aws_resource_name_prefix': 'dymekweb-mobilehub-1921189089',
+}
 
 export default awsmobile;

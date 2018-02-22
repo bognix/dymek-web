@@ -1,0 +1,14 @@
+export const MARKERS = {
+  SET_LIST: 'MARKERS_SET_LIST',
+  FETCH_LIST: 'MARKERS_FETCH_LIST',
+  FETCH_LIST_SUCCESS: 'MARKERS_FETCH_LIST_SUCCESS',
+  FETCH_LIST_ERROR: 'MARKERS_FETCH_LIST_ERROR',
+};
+
+export const API = {
+  NAME: 'dev-dymek-api',
+};
+
+export default {
+  MARKERS,
+};
