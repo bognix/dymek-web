@@ -8,14 +8,15 @@ export const fetchMarkersError = error => ({
   type: MARKERS.FETCH_LIST_ERROR, payload: error,
 });
 
-export const postMarker = (payload) => {
-  const { lat, lng } = payload.latLng;
+export const postMarker = ({ latLng, lat, lng }) => {
+  const latitude = latLng ? latLng.lat() : lat;
+  const longitude = latLng ? latLng.lng() : lng;
 
   return {
     type: MARKERS.CREATE,
     payload: {
-      latitude: lat(),
-      longitude: lng(),
+      latitude,
+      longitude,
     },
   };
 };

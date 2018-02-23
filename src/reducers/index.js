@@ -6,6 +6,7 @@ const initialMarkersState = {
   meta: {
     total: 0,
   },
+  canPost: true,
 };
 
 const markersReducer = (state = initialMarkersState, { type, payload }) => {
@@ -27,6 +28,7 @@ const markersReducer = (state = initialMarkersState, { type, payload }) => {
           ...state.meta,
           total: state.meta.total + 1,
         },
+        canPost: false,
       };
     default:
       return state;
