@@ -8,7 +8,7 @@ const mapStateToProps = ({ ui }) => ({
   message: ui.snackbar.message,
   autoHideDuration: 4000,
   bodyStyle: {
-    'background-color': ui.snackbar.color,
+    backgroundColor: ui.snackbar.color,
   },
 });
 

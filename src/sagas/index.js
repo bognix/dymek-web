@@ -19,10 +19,10 @@ function* createMarker({ payload }) {
   try {
     const data = yield call(api.postMarker, payload);
     yield put(postMarkerSuccess(data));
-    yield put(showSnackbar, {
+    yield put(showSnackbar({
       color: COLOR_SUCCESS,
       message: 'Dziękujemy za zgłoszenie dymka!',
-    });
+    }));
   } catch (e) {
     console.error(e);
     yield put(postMarkerError(e));
