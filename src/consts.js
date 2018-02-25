@@ -8,6 +8,11 @@ export const MARKERS = {
   CREATE_SUCCESS: 'MARKERS_SUCCESS',
 };
 
+export const UI = {
+  SHOW_SNACKBAR: 'UI_SHOW_SNACKBAR',
+  HIDE_SNACKBAR: 'UI_HIDE_SNACKBAR',
+};
+
 export const API = {
   NAME: 'dev-dymek-api',
 };

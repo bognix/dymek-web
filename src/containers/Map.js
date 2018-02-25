@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import MapView from '../components/MapView';
-import { postMarker } from '../actions';
+import { postMarker } from '../actions/markers';
 
 const mapStateToProps = ({ markers }) => ({
   markers: markers.list,

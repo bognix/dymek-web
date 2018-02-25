@@ -7,8 +7,9 @@ import Amplify from 'aws-amplify';
 import logger from 'redux-logger';
 
 import Navbar from './components/Navbar';
+import Snackbar from './containers/Snackbar';
 import Router from './Router';
-import './App.css';
+import './App.sass';
 import reducers from './reducers/index';
 import AWS_EXPORTS from './aws-exports';
 import { MARKERS } from './consts';
@@ -29,6 +30,7 @@ export default () => (
     <Router>
       <div className="App">
         <NavbarWithRouter />
+        <Snackbar />
       </div>
     </Router>
   </Provider>

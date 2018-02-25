@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { MARKERS } from '../consts';
+import { MARKERS, UI } from '../consts';
 
 const initialMarkersState = {
   list: [],
@@ -35,6 +35,36 @@ const markersReducer = (state = initialMarkersState, { type, payload }) => {
   }
 };
 
+
+const initialUiState = {
+  snackbar: {
+    visible: false,
+    message: '',
+    className: 'is-success',
+  },
+};
+
+const uiReducer = (state = initialUiState, { type, payload }) => {
+  switch (type) {
+    case UI.SHOW_SNACKBAR:
+      return {
+        ...state,
+        snackbar: {
+          visible: true,
+          ...payload,
+        },
+      };
+    case UI.HIDE_SNACKBAR:
+      return {
+        ...state,
+        snackbar: initialUiState.snackbar,
+      };
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   markers: markersReducer,
+  ui: uiReducer,
 });
