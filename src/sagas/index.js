@@ -1,9 +1,12 @@
 import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
+import { v4 as getId } from 'uuid';
 import * as api from '../api';
-import { MARKERS } from '../consts';
+import { MARKERS, USER } from '../consts';
 import { fetchMarkersSuccess, fetchMarkersError, postMarkerSuccess, postMarkerError } from '../actions/markers';
 import { showSnackbar } from '../actions/ui';
+import { setUser } from '../actions/user';
 import { COLOR_ERROR, COLOR_SUCCESS } from '../theme';
+import storage from '../storage';
 
 function* fetchMarkers() {
   try {
@@ -12,6 +15,10 @@ function* fetchMarkers() {
   } catch (e) {
     console.error(e);
     yield put(fetchMarkersError(e));
+    yield put(showSnackbar({
+      color: COLOR_ERROR,
+      message: 'Niestety nie udało Nam się pobrać pobliskich zanieczyszczeń :( Proszę odśwież stronę.',
+    }));
   }
 }
 
@@ -33,9 +40,18 @@ function* createMarker({ payload }) {
   }
 }
 
+function* createUser() {
+  const id = getId();
+  storage.set('dymek-user', id);
+  yield put(setUser({
+    id,
+  }));
+}
+
 function* mySaga() {
   yield takeLatest(MARKERS.FETCH_LIST, fetchMarkers);
   yield takeEvery(MARKERS.CREATE, createMarker);
+  yield takeLatest(USER.CREATE, createUser);
 }
 
 export default mySaga;

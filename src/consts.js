@@ -13,6 +13,11 @@ export const UI = {
   HIDE_SNACKBAR: 'UI_HIDE_SNACKBAR',
 };
 
+export const USER = {
+  CREATE: 'USER_CREATE',
+  SET: 'USER_SET',
+};
+
 export const API = {
   NAME: 'dev-dymek-api',
 };

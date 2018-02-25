@@ -12,8 +12,9 @@ import Router from './Router';
 import './App.sass';
 import reducers from './reducers/index';
 import AWS_EXPORTS from './aws-exports';
-import { MARKERS } from './consts';
+import { MARKERS, USER } from './consts';
 import saga from './sagas/index';
+import storage from './storage';
 
 Amplify.configure(AWS_EXPORTS);
 
@@ -22,6 +23,13 @@ const sagaMiddleware = createSagaMiddleware();
 const NavbarWithRouter = withRouter(Navbar);
 const store = createStore(reducers, applyMiddleware(sagaMiddleware, logger));
 sagaMiddleware.run(saga);
+
+const user = storage.get('dymek-user');
+if (!user) {
+  store.dispatch({ type: USER.CREATE });
+} else {
+  store.dispatch({ type: USER.SET, payload: user });
+}
 
 store.dispatch({ type: MARKERS.FETCH_LIST });
 

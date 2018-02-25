@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { MARKERS, UI } from '../consts';
+import { MARKERS, UI, USER } from '../consts';
 
 const initialMarkersState = {
   list: [],
@@ -64,7 +64,23 @@ const uiReducer = (state = initialUiState, { type, payload }) => {
   }
 };
 
+const initialUserState = {
+  id: 0,
+};
+
+const userReducer = (state = initialUserState, { type, payload }) => {
+  switch (type) {
+    case USER.SET:
+      return {
+        ...payload,
+      };
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   markers: markersReducer,
   ui: uiReducer,
+  user: userReducer,
 });
