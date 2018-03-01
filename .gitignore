@@ -26,3 +26,6 @@ awsmobilejs/\#current-backend-info
 
 # editor
 .vscode
+
+# graphql
+__generated__/
