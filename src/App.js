@@ -13,6 +13,7 @@ import { USER } from './consts';
 import saga from './sagas/index';
 import MapPage from './components/MapPage';
 import storage from './storage';
+import Navbar from './components/Navbar';
 
 Amplify.configure(AWS_EXPORTS);
 
@@ -31,5 +32,8 @@ if (!user) {
 // store.dispatch({ type: MARKERS.FETCH_LIST });
 
 export default () => (
-  <MapPage />
+  <div className="App">
+    <Navbar />
+    <MapPage />
+  </div>
 );

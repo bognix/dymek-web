@@ -7,7 +7,6 @@ import FlatButton from 'material-ui/FlatButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ActionDone from 'material-ui/svg-icons/action/done';
 import React from 'react';
-import { createFragmentContainer, graphql } from 'react-relay';
 import PersonPin from '../svgs/personPin';
 
 import withGeolocation from '../hocs/withGeolocation';
@@ -19,7 +18,7 @@ const ButtonStyle = {
   right: '75px',
 };
 
-const MyMapComponent = compose(
+const MarkersList = compose(
   withProps({
     googleMapURL: 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAOu0YNN7QMQuY-Ki9bK0KwLYN9jVP78nM&libraries=geometry,drawing,places',
     loadingElement: <div style={{ height: '100%' }} />,
@@ -82,12 +81,4 @@ const MyMapComponent = compose(
   );
 });
 
-export default createFragmentContainer(MyMapComponent, graphql`
-  fragment MarkersList_markers on Query {
-    markers {
-      latitude,
-      longitude,
-      id
-    }
-  }
-`);
+export default MarkersList;

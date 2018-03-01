@@ -5,11 +5,11 @@ import {
   Store,
 } from 'relay-runtime';
 
-import AWS_EXPORTS from './aws-exports';
+// import AWS_EXPORTS from './aws-exports';
 
-const domain = AWS_EXPORTS;
+// const domain = AWS_EXPORTS;
 
-console.log(domain);
+// console.log(domain);
 
 function fetchQuery(
   operation,
@@ -24,7 +24,13 @@ function fetchQuery(
       query: operation.text,
       variables,
     }),
-  }).then(response => response.json());
+  })
+    .then((response) => {
+      if (response.status !== 200) {
+        throw new Error('error');
+      }
+      return response.json();
+    });
 }
 
 const environment = new Environment({
