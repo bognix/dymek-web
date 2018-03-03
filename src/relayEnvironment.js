@@ -4,12 +4,7 @@ import {
   RecordSource,
   Store,
 } from 'relay-runtime';
-
-// import AWS_EXPORTS from './aws-exports';
-
-// const domain = AWS_EXPORTS;
-
-// console.log(domain);
+import storage from './storage';
 
 function fetchQuery(
   operation,
@@ -19,17 +14,19 @@ function fetchQuery(
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'x-dymek-user-id': storage.get('dymek-user'),
     },
     body: JSON.stringify({
       query: operation.text,
       variables,
     }),
   })
-    .then((response) => {
-      if (response.status !== 200) {
-        throw new Error('error');
+    .then(response => response.json())
+    .then((json) => {
+      if (json.errors) {
+        return Promise.reject(json.errors);
       }
-      return response.json();
+      return Promise.resolve(json);
     });
 }
 

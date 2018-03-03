@@ -12,10 +12,16 @@ import { COLOR_ERROR } from '../theme';
 
 const MapPageQuery = graphql`
   query MapPageQuery {
-      markers {
-        latitude,
-        longitude,
-        id
+      markers(last: 1000000) @connection(key: "MapPage_markers", filters: []) {
+        edges {
+          marker: node {
+            createdAt,
+            latitude,
+            longitude,
+            userId,
+            id
+          }
+        }
       }
   }
 `;
@@ -25,6 +31,10 @@ export default () => (
     environment={environment}
     query={MapPageQuery}
     render={({ error, props }) => {
+      let markers = [];
+      if (props && props.markers && props.markers.edges) {
+        markers = props.markers.edges;
+      }
       if (error) {
         return (<Snackbar
           open
@@ -35,7 +45,7 @@ export default () => (
           }}
         />);
       } else if (props) {
-        return <MarkersList markers={props.markers} />;
+        return <MarkersList markers={markers} />;
       }
       return <div>Loading</div>;
     }}
