@@ -1,4 +1,8 @@
+/* eslint jsx-a11y/anchor-is-valid: "off" */
+
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import AppBar from 'material-ui/AppBar';
@@ -13,6 +17,11 @@ class Navbar extends React.Component {
     this.state = { open: false };
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.onTitleClick = this.onTitleClick.bind(this);
+  }
+
+  onTitleClick() {
+    this.props.history.push('/');
   }
 
   handleClose() {
@@ -34,14 +43,13 @@ class Navbar extends React.Component {
           titleStyle={TitleStyle}
         />
         <Drawer open={this.state.open} containerStyle={{ top: '64px' }}>
-          <MenuItem>Mapa</MenuItem>
-          <MenuItem>
-                Ostatnie Odczyty
-          </MenuItem>
+          <NavLink to="/map" className="ml1 no-underline black">
+            <MenuItem>Mapa</MenuItem>
+          </NavLink>
         </Drawer>
       </div>
     );
   }
 }
 
-export default Navbar;
+export default withRouter(Navbar);
