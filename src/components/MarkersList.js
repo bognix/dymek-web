@@ -28,21 +28,24 @@ class MarkersList extends Component {
       error: false,
     };
     this.addMarker = this.addMarker.bind(this);
+    this.onSnackbarClosed = this.onSnackbarClosed.bind(this);
+  }
+
+  onSnackbarClosed() {
+    this.setState({
+      saved: false,
+      error: false,
+    });
   }
 
   addMarker(payload) {
-    this.setState({
-      saved: false,
-      error: '',
-    });
-
     CreateMarkerMutation.commit(payload, (error) => {
       if (error) {
-        this.setState({ error: true });
+        this.setState({ error: true, saved: true });
       }
+    }, () => {
+      this.setState({ error: false, saved: true });
     });
-
-    this.setState({ saved: true });
   }
 
   render() {
@@ -64,7 +67,6 @@ class MarkersList extends Component {
       <GoogleMap
         defaultZoom={15}
         center={{ lat: latitude, lng: longitude }}
-        onClick={payload => this.addMarker(payload)}
       >
         <Marker
           position={{ lat: latitude, lng: longitude }}
@@ -102,6 +104,7 @@ class MarkersList extends Component {
           bodyStyle={{
             backgroundColor: this.state.error ? COLOR_ERROR : COLOR_SUCCESS,
           }}
+          onRequestClose={this.onSnackbarClosed}
         />
       </GoogleMap>
     );
