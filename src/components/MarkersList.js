@@ -25,7 +25,7 @@ class MarkersList extends Component {
     super(props);
     this.state = {
       saved: false,
-      error: '',
+      error: false,
     };
     this.addMarker = this.addMarker.bind(this);
   }
@@ -38,7 +38,7 @@ class MarkersList extends Component {
 
     CreateMarkerMutation.commit(payload, (error) => {
       if (error) {
-        this.setState({ error });
+        this.setState({ error: true });
       }
     });
 

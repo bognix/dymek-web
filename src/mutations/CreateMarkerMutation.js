@@ -26,7 +26,7 @@ const mutation = graphql`
 
 let tempID = 0;
 
-function commit(payload) {
+function commit(payload, errorCallback) {
   tempID += 1;
   return commitMutation(
     environment,
@@ -49,6 +49,7 @@ function commit(payload) {
         );
         ConnectionHandler.insertEdgeAfter(conn, newMarker);
       },
+      onError: args => errorCallback(args),
     },
   );
 }
