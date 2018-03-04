@@ -14,6 +14,18 @@ if (!NODE_ENV) {
   );
 }
 
+if (process.env.HOST_ENV) {
+  const hostEnvFile = `${paths.dotenv}.${process.env.HOST_ENV}`;
+
+  if (fs.existsSync(hostEnvFile)) {
+    require('dotenv-expand')(
+      require('dotenv').config({
+        path: hostEnvFile,
+      })
+    );
+  }
+}
+
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
 var dotenvFiles = [
   `${paths.dotenv}.${NODE_ENV}.local`,

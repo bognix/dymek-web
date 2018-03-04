@@ -6,8 +6,9 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 
 import MapPage from './components/MapPage';
 import Main from './components/Main';
-import storage from './storage';
 import Navbar from './components/Navbar';
+import NotFound from './components/NotFound';
+import storage from './storage';
 
 
 import './App.sass';
@@ -24,6 +25,7 @@ export default () => (
       <Switch>
         <Route exact path="/" component={Main} />
         <Route exact path="/map" component={MapPage} />
+        <Route component={NotFound} />
       </Switch>
     </div>
   </Router>

@@ -8,7 +8,7 @@
 const awsmobile = {
     'aws_app_analytics': 'enable',
     'aws_cloud_logic': 'enable',
-    'aws_cloud_logic_custom': [{"id":"1t8rff8ana","name":"dev-dymek-api","description":"","endpoint":"https://1t8rff8ana.execute-api.eu-central-1.amazonaws.com/dev","region":"eu-central-1","paths":["/api/123"]}],
+    'aws_cloud_logic_custom': [{"id":"d1q5mzqh93","name":"staging-dymek-api","description":"","endpoint":"https://d1q5mzqh93.execute-api.eu-central-1.amazonaws.com/staging","region":"eu-central-1","paths":["/api/markers"]},{"id":"1t8rff8ana","name":"dev-dymek-api","description":"","endpoint":"https://1t8rff8ana.execute-api.eu-central-1.amazonaws.com/dev","region":"eu-central-1","paths":["/api/markers"]}],
     'aws_cognito_identity_pool_id': 'eu-central-1:228e070a-b1c2-4f6c-9a17-9490e42e2f71',
     'aws_cognito_region': 'eu-central-1',
     'aws_content_delivery': 'enable',

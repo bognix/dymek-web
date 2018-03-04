@@ -44,6 +44,12 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "build:dev": "HOST_ENV=dev node scripts/build.js",
+    "build:staging": "HOST_ENV=staging node scripts/build.js",
+    "build:production": "HOST_ENV=production node scripts/build.js",
+    "deploy:dev": "HOST_ENV=dev node scripts/build.js && awsmobile publish -c",
+    "deploy:staging": "HOST_ENV=staging awsmobile publish -c",
+    "deploy:production": "HOST_ENV=production node scripts/build.js && awsmobile publish -c",
     "test": "node scripts/test.js --env=jsdom",
     "relay": "relay-compiler --src ./src --schema ./schema.graphql"
   },
