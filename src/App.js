@@ -1,5 +1,3 @@
-/* eslint react/jsx-filename-extension: "off" */
-
 import React from 'react';
 import { v4 as getId } from 'uuid';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
