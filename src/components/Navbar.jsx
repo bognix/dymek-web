@@ -42,8 +42,13 @@ class Navbar extends React.Component {
           onTitleClick={this.onTitleClick}
           titleStyle={TitleStyle}
         />
-        <Drawer open={this.state.open} containerStyle={{ top: '64px' }}>
-          <NavLink to="/map" className="ml1 no-underline black">
+        <Drawer
+          open={this.state.open}
+          containerStyle={{ top: '64px' }}
+          docked={false}
+          onRequestChange={open => this.setState({ open })}
+        >
+          <NavLink to="/map" className="ml1 no-underline black" onClick={this.handleClose}>
             <MenuItem>Mapa</MenuItem>
           </NavLink>
         </Drawer>
