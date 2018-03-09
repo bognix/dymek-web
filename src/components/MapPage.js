@@ -1,53 +1,48 @@
 /* eslint react/jsx-filename-extension: "off" */
 
 import React from 'react';
-import {
-  QueryRenderer,
-  graphql,
-} from 'react-relay';
-import Snackbar from 'material-ui/Snackbar';
-import environment from '../relayEnvironment';
+
+
+import { GoogleMap, Marker, withScriptjs, withGoogleMap } from 'react-google-maps';
+import { compose, withProps } from 'recompose';
+
 import MarkersList from './MarkersList';
-import { COLOR_ERROR } from '../theme';
+import AddMarker from './AddMarker';
+import withGeolocation from '../hocs/withGeolocation';
+import PersonPin from '../svgs/personPin';
+import { COLORS } from '../theme';
 
-const MapPageQuery = graphql`
-  query MapPageQuery {
-      markers(last: 1000000) @connection(key: "MapPage_markers", filters: []) {
-        edges {
-          marker: node {
-            createdAt,
-            latitude,
-            longitude,
-            userId,
-            id
-          }
-        }
-      }
-  }
-`;
+const PersonPinSVG = {
+  ...PersonPin,
+  fillColor: COLORS.accent1Color,
+  strokeColor: COLORS.accent1Color,
+  fillOpacity: 1,
+};
 
-export default () => (
-  <QueryRenderer
-    environment={environment}
-    query={MapPageQuery}
-    render={({ error, props }) => {
-      let markers = [];
-      if (props && props.markers && props.markers.edges) {
-        markers = props.markers.edges;
-      }
-      if (error) {
-        return (<Snackbar
-          open
-          message="Nie udało się pobrać znaczników"
-          autoHideDuration={4000}
-          bodyStyle={{
-            backgroundColor: COLOR_ERROR,
-          }}
-        />);
-      } else if (props) {
-        return <MarkersList markers={markers} />;
-      }
-      return <div>Loading</div>;
-    }}
-  />
+const MapPage = ({ latitude, longitude }) => (
+  <GoogleMap
+    defaultZoom={15}
+    center={{ lat: latitude, lng: longitude }}
+  >
+    <Marker
+      position={{ lat: latitude, lng: longitude }}
+      title="Jesteś tutaj"
+      animation={window.google.maps.Animation.DROP}
+      icon={PersonPinSVG}
+    />
+    <MarkersList latitude={latitude} longitude={longitude} />
+    <AddMarker />
+  </GoogleMap>
 );
+
+export default compose(
+  withProps({
+    googleMapURL: 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAOu0YNN7QMQuY-Ki9bK0KwLYN9jVP78nM&libraries=geometry,drawing,places',
+    loadingElement: <div style={{ height: '100%' }} />,
+    containerElement: <div style={{ height: 'calc(100vh - 64px)' }} />,
+    mapElement: <div style={{ height: '100%' }} />,
+  }),
+  withGeolocation,
+  withScriptjs,
+  withGoogleMap,
+)(MapPage);

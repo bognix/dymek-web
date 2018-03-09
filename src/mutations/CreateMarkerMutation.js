@@ -13,11 +13,10 @@ const mutation = graphql`
       markerEdge {
         cursor
         node {
-          latitude
-          longitude
-          createdAt
-          id
-          userId
+          geoJson {
+            latitude,
+            longitude
+          }
         }
       }
     }
