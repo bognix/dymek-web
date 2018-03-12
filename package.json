@@ -5,6 +5,7 @@
   "dependencies": {
     "autoprefixer": "7.1.6",
     "aws-amplify": "^0.2.0",
+    "awsmobile-cli": "^1.0.17",
     "babel-core": "6.26.0",
     "babel-jest": "20.0.3",
     "babel-loader": "7.1.2",
@@ -47,9 +48,9 @@
     "build:dev": "HOST_ENV=dev node scripts/build.js",
     "build:staging": "HOST_ENV=staging node scripts/build.js",
     "build:production": "HOST_ENV=production node scripts/build.js",
-    "deploy:dev": "HOST_ENV=dev node awsmobile publish -c",
+    "deploy:dev": "HOST_ENV=dev awsmobile publish -c",
     "deploy:staging": "HOST_ENV=staging awsmobile publish -c",
-    "deploy:production": "HOST_ENV=production node awsmobile publish -c",
+    "deploy:production": "HOST_ENV=production awsmobile publish -c",
     "test": "node scripts/test.js --env=jsdom",
     "relay": "relay-compiler --src ./src --schema ./schema.graphql"
   },
