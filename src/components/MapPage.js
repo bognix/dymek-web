@@ -31,7 +31,7 @@ const MapPage = ({ latitude, longitude }) => (
       icon={PersonPinSVG}
     />
     <MarkersList latitude={latitude} longitude={longitude} />
-    <AddMarker />
+    <AddMarker latitude={latitude} longitude={longitude} />
   </GoogleMap>
 );
 

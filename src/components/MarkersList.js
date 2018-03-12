@@ -55,7 +55,6 @@ export default ({ latitude, longitude }) => (
           }}
         />);
       } else if (props) {
-        console.log(props);
         return (
           <MarkerClusterer
             averageCenter
@@ -64,7 +63,12 @@ export default ({ latitude, longitude }) => (
           >
             {markers.map(item => (
               <Marker
-                position={{ lat: Number(item.marker.latitude), lng: Number(item.marker.longitude) }}
+                position={
+                  {
+                    lat: Number(item.marker.geoJson.latitude),
+                    lng: Number(item.marker.geoJson.longitude),
+                  }
+                }
                 key={item.marker.id}
               />
             ))}

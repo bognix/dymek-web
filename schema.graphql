@@ -1,5 +1,5 @@
 # source: http://localhost:3000/api/markers
-# timestamp: Fri Mar 09 2018 08:12:28 GMT+0100 (CET)
+# timestamp: Mon Mar 12 2018 09:06:54 GMT+0100 (CET)
 
 schema {
   query: Root
@@ -9,7 +9,7 @@ schema {
 input CreateMarkerInput {
   latitude: Float!
   longitude: Float!
-  type: MarkerType
+  type: String
   clientMutationId: String
 }
 
@@ -27,7 +27,7 @@ type Marker implements Node {
   id: ID!
   createdAt: String
   userId: ID
-  type: MarkerType
+  type: String
   geoJson: geo
   hashKey: String
   geoHash: String
@@ -49,12 +49,6 @@ type MarkerEdge {
 
   """A cursor for use in pagination"""
   cursor: String!
-}
-
-enum MarkerType {
-  CHIMNEY_SMOKE
-  DOG_POOP
-  ILLEGAL_PARKING
 }
 
 type Mutation {
@@ -89,7 +83,7 @@ input QueryRadius {
 }
 
 type Root {
-  markers(userId: ID, type: MarkerType, location: QueryRadius, after: String, first: Int, before: String, last: Int): MarkerConnection
+  markers(userId: ID, type: String, location: QueryRadius, after: String, first: Int, before: String, last: Int): MarkerConnection
 
   """Fetches an object given its ID"""
   node(

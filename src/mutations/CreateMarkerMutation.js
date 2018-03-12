@@ -36,6 +36,7 @@ function commit(payload, errorCallback, successCallback) {
           latitude: payload.lat,
           longitude: payload.lng,
           clientMutationId: tempID,
+          type: 'DOOG_POOP',
         },
       },
       updater: (store) => {
@@ -44,7 +45,7 @@ function commit(payload, errorCallback, successCallback) {
         const root = store.getRoot();
         const conn = ConnectionHandler.getConnection(
           root,
-          'MapPage_markers',
+          'MarkersList_markers',
         );
         ConnectionHandler.insertEdgeAfter(conn, newMarker);
       },
