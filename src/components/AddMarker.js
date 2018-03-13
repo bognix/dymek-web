@@ -24,9 +24,8 @@ class AddMarker extends Component {
     });
   }
 
-  addMarker() {
-    const { latitude, longitude } = this.props;
-    CreateMarkerMutation.commit({ lat: latitude, lng: longitude }, (error) => {
+  addMarker({ latitude, longitude, type }) {
+    CreateMarkerMutation.commit({ lat: latitude, lng: longitude, type }, (error) => {
       if (error) {
         this.setState({ error: true, saved: true });
       }
@@ -39,7 +38,7 @@ class AddMarker extends Component {
     const { error, saved } = this.state;
 
     return (
-      <div style={this.props.style}>
+      <div className={this.props.className}>
         {this.props.render({
           addMarker: this.addMarker, error, saved,
         })}

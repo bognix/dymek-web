@@ -36,7 +36,7 @@ function commit(payload, errorCallback, successCallback) {
           latitude: payload.lat,
           longitude: payload.lng,
           clientMutationId: tempID,
-          type: 'DOOG_POOP',
+          type: payload.type,
         },
       },
       updater: (store) => {
