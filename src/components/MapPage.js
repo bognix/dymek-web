@@ -7,7 +7,7 @@ import { GoogleMap, Marker, withScriptjs, withGoogleMap } from 'react-google-map
 import { compose, withProps } from 'recompose';
 
 import MarkersList from './MarkersList';
-import AddMarker from './AddMarker';
+import BottomDrawer from './BottomDrawer';
 import withGeolocation from '../hocs/withGeolocation';
 import PersonPin from '../svgs/personPin';
 import { COLORS } from '../theme';
@@ -31,7 +31,7 @@ const MapPage = ({ latitude, longitude }) => (
       icon={PersonPinSVG}
     />
     <MarkersList latitude={latitude} longitude={longitude} />
-    <AddMarker latitude={latitude} longitude={longitude} />
+    <BottomDrawer latitude={latitude} longitude={longitude} />
   </GoogleMap>
 );
 
@@ -39,7 +39,7 @@ export default compose(
   withProps({
     googleMapURL: 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAOu0YNN7QMQuY-Ki9bK0KwLYN9jVP78nM&libraries=geometry,drawing,places',
     loadingElement: <div style={{ height: '100%' }} />,
-    containerElement: <div style={{ height: 'calc(100vh - 64px)' }} />,
+    containerElement: <div style={{ height: 'calc(66vh - 64px)' }} />,
     mapElement: <div style={{ height: '100%' }} />,
   }),
   withGeolocation,
