@@ -24,13 +24,18 @@ class AddMarker extends Component {
     });
   }
 
-  addMarker({ latitude, longitude, type }) {
-    CreateMarkerMutation.commit({ lat: latitude, lng: longitude, type }, (error) => {
-      if (error) {
-        this.setState({ error: true, saved: true });
-      }
-    }, () => {
-      this.setState({ error: false, saved: true });
+  addMarker(payload) {
+    return new Promise((resolve, reject) => {
+      CreateMarkerMutation.commit(payload, (error) => {
+        if (error) {
+          this.setState({ error: true, saved: true });
+          return reject();
+        }
+        return reject();
+      }, () => {
+        this.setState({ error: false, saved: true });
+        return resolve();
+      });
     });
   }
 
