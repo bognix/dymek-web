@@ -5,6 +5,7 @@ import Parking from 'material-ui/svg-icons/maps/local-parking';
 import Smoke from 'material-ui/svg-icons/places/smoking-rooms';
 
 import AddMarker from './AddMarker';
+import BottomDrawerStyles from './BottomDrawer.sass';
 
 const styles = {
   root: {
@@ -12,7 +13,7 @@ const styles = {
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '34vh',
+    height: 'calc(34vh - 64px)',
   },
   tile: {
     flex: 1,
@@ -53,8 +54,9 @@ const tilesData = [
   },
 ];
 
+console.log(BottomDrawerStyles);
 const BottomDrawer = props => (
-  <div style={styles.root}>
+  <div className={BottomDrawerStyles.drawer}>
     {tilesData.map(tile => (
       <AddMarker
         style={styles.tile}

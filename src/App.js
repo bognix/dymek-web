@@ -9,7 +9,7 @@ import NotFound from './components/NotFound';
 import storage from './storage';
 
 
-import './App.sass';
+import AppStyles from './App.sass';
 
 const user = storage.get('dymek-user');
 if (!user) {
@@ -18,7 +18,7 @@ if (!user) {
 
 export default () => (
   <Router>
-    <div className="App">
+    <div className={AppStyles.App}>
       <Navbar />
       <Switch>
         <Route exact path="/" component={Main} />

@@ -39,7 +39,7 @@ export default compose(
   withProps({
     googleMapURL: 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAOu0YNN7QMQuY-Ki9bK0KwLYN9jVP78nM&libraries=geometry,drawing,places',
     loadingElement: <div style={{ height: '100%' }} />,
-    containerElement: <div style={{ height: 'calc(66vh - 64px)' }} />,
+    containerElement: <div style={{ height: '66vh' }} />,
     mapElement: <div style={{ height: '100%' }} />,
   }),
   withGeolocation,
