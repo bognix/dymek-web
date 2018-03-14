@@ -8,6 +8,7 @@ import { compose, withProps } from 'recompose';
 
 import MarkersList from './MarkersList';
 import BottomDrawer from './BottomDrawer';
+import MarkersFilters from './MarkersFilters';
 import withGeolocation from '../hocs/withGeolocation';
 import PersonPin from '../svgs/personPin';
 import { COLORS } from '../theme';
@@ -30,6 +31,7 @@ const MapPage = ({ latitude, longitude }) => (
       animation={window.google.maps.Animation.DROP}
       icon={PersonPinSVG}
     />
+    <MarkersFilters />
     <MarkersList latitude={latitude} longitude={longitude} />
     <BottomDrawer latitude={latitude} longitude={longitude} />
   </GoogleMap>

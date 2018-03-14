@@ -1,27 +1,11 @@
-export const MARKERS = {
-  SET_LIST: 'MARKERS_SET_LIST',
-  FETCH_LIST: 'MARKERS_FETCH_LIST',
-  FETCH_LIST_SUCCESS: 'MARKERS_FETCH_LIST_SUCCESS',
-  FETCH_LIST_ERROR: 'MARKERS_FETCH_LIST_ERROR',
-  CREATE: 'MARKERS_CREATE',
-  CREATE_ERROR: 'MARKERS_ERROR',
-  CREATE_SUCCESS: 'MARKERS_SUCCESS',
-};
-
-export const UI = {
-  SHOW_SNACKBAR: 'UI_SHOW_SNACKBAR',
-  HIDE_SNACKBAR: 'UI_HIDE_SNACKBAR',
-};
-
-export const USER = {
-  CREATE: 'USER_CREATE',
-  SET: 'USER_SET',
-};
-
-export const API = {
-  NAME: 'dev-dymek-api',
-};
-
-export default {
-  MARKERS,
+export const MARKER_TYPES = {
+  DOOG_POOP: {
+    value: 'DOOG_POOP',
+  },
+  ILLEGAL_PARKING: {
+    value: 'ILLEGAL_PARKING',
+  },
+  CHIMNEY_SMOKE: {
+    value: 'CHIMNEY_SMOKE',
+  },
 };
