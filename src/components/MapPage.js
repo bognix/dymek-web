@@ -130,11 +130,19 @@ class MapPage extends Component {
     const userFilter = !!this.state.queryVariables.userId;
 
     return (
-      <QueryRenderer
-        environment={environment}
-        query={MapPageQuery}
-        variables={this.state.queryVariables}
-        render={({ error, props }) => {
+      <div>
+        <MarkersFilters
+          onUserChange={this.handleUserFilter}
+          userFilter={userFilter}
+          markerTypes={markerTypes}
+          onTypesChange={this.handleTypesFilter}
+        />
+        <BottomDrawer latitude={latitude} longitude={longitude} />
+        <QueryRenderer
+          environment={environment}
+          query={MapPageQuery}
+          variables={this.state.queryVariables}
+          render={({ error, props }) => {
           let markers = [];
           if (props && props.markers && props.markers.edges) {
             markers = props.markers.edges;
@@ -160,20 +168,14 @@ class MapPage extends Component {
                     animation={window.google.maps.Animation.DROP}
                     icon={PersonPinSVG}
                   />
-                  <MarkersFilters
-                    onUserChange={this.handleUserFilter}
-                    userFilter={userFilter}
-                    markerTypes={markerTypes}
-                    onTypesChange={this.handleTypesFilter}
-                  />
-                  <BottomDrawer latitude={latitude} longitude={longitude} />
                   <MarkersList markers={markers} />
                 </GoogleMap>
             );
           }
             return <span>Loading</span>;
         }}
-      />
+        />
+      </div>
     );
   }
 }
