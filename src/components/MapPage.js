@@ -16,6 +16,7 @@ import withGeolocation from '../hocs/withGeolocation';
 import { COLORS, COLOR_ERROR } from '../theme';
 import MarkersFilters from './MarkersFilters';
 import environment from '../relayEnvironment';
+import storage from '../storage';
 
 const PersonPinSVG = {
   ...PersonPin,
@@ -26,8 +27,8 @@ const PersonPinSVG = {
 
 
 const MapPageQuery = graphql`
-  query MarkersListQuery($location: QueryRadius) {
-      markers(location: $location, last: 100) @connection(key: "MarkersList_markers", filters: []) {
+  query MapPageQuery($location: QueryRadius, $userId: ID) {
+      markers(location: $location, userId: $userId, last: 100) @connection(key: "MapPage_markers", filters: []) {
         edges {
           marker: node {
             createdAt,
@@ -46,10 +47,37 @@ class MapPage extends Component {
   constructor(props) {
     super(props);
 
+    const { latitude, longitude } = props;
+
     this.state = {
-      userId: 0,
-      markerTypes: [],
+      queryVariables: {
+        location: {
+          latitude,
+          longitude,
+          radius: 1000,
+        },
+        userId: null,
+      },
     };
+
+    this.handleUserFiler = this.handleUserFiler.bind(this);
+  }
+
+  handleUserFiler(isChecked) {
+    if (isChecked) {
+      this.setState({
+        queryVariables: {
+          ...this.state.queryVariables,
+          userId: storage.get('dymek-user'),
+        },
+      });
+    } else {
+      const { userId, ...queryVariables } = this.state.queryVariables;
+
+      this.setState({
+        queryVariables,
+      });
+    }
   }
 
   render() {
@@ -59,15 +87,7 @@ class MapPage extends Component {
       <QueryRenderer
         environment={environment}
         query={MapPageQuery}
-        variables={{
-          location: {
-            latitude,
-            longitude,
-            radius: 1000,
-          },
-          userId: this.state.userId,
-          markerTypes: this.state.markerTypes,
-        }}
+        variables={this.state.queryVariables}
         render={({ error, props }) => {
           let markers = [];
           if (props && props.markers && props.markers.edges) {
@@ -94,7 +114,7 @@ class MapPage extends Component {
                     animation={window.google.maps.Animation.DROP}
                     icon={PersonPinSVG}
                   />
-                  <MarkersFilters />
+                  <MarkersFilters onUserChange={this.handleUserFiler} />
                   <BottomDrawer latitude={latitude} longitude={longitude} />
                   <MarkersList markers={markers} />
                 </GoogleMap>
