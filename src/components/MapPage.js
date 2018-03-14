@@ -3,38 +3,18 @@
 import React from 'react';
 
 
-import { GoogleMap, Marker, withScriptjs, withGoogleMap } from 'react-google-maps';
+import { withScriptjs, withGoogleMap } from 'react-google-maps';
 import { compose, withProps } from 'recompose';
 
 import MarkersList from './MarkersList';
 import BottomDrawer from './BottomDrawer';
-import MarkersFilters from './MarkersFilters';
 import withGeolocation from '../hocs/withGeolocation';
-import PersonPin from '../svgs/personPin';
-import { COLORS } from '../theme';
-
-const PersonPinSVG = {
-  ...PersonPin,
-  fillColor: COLORS.accent1Color,
-  strokeColor: COLORS.accent1Color,
-  fillOpacity: 1,
-};
 
 const MapPage = ({ latitude, longitude }) => (
-  <GoogleMap
-    defaultZoom={15}
-    center={{ lat: latitude, lng: longitude }}
-  >
-    <Marker
-      position={{ lat: latitude, lng: longitude }}
-      title="Jesteś tutaj"
-      animation={window.google.maps.Animation.DROP}
-      icon={PersonPinSVG}
-    />
-    <MarkersFilters />
+  <div>
     <MarkersList latitude={latitude} longitude={longitude} />
     <BottomDrawer latitude={latitude} longitude={longitude} />
-  </GoogleMap>
+  </div>
 );
 
 export default compose(

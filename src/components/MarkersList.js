@@ -3,14 +3,24 @@
 import React from 'react';
 import { MarkerClusterer } from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import Snackbar from 'material-ui/Snackbar';
-import { Marker } from 'react-google-maps';
 import {
   QueryRenderer,
   graphql,
 } from 'react-relay';
+import { GoogleMap, Marker } from 'react-google-maps';
+
 
 import environment from '../relayEnvironment';
-import { COLOR_ERROR } from '../theme';
+import { COLOR_ERROR, COLORS } from '../theme';
+import MarkersFilters from './MarkersFilters';
+import PersonPin from '../svgs/personPin';
+
+const PersonPinSVG = {
+  ...PersonPin,
+  fillColor: COLORS.accent1Color,
+  strokeColor: COLORS.accent1Color,
+  fillOpacity: 1,
+};
 
 const MarkersListQuery = graphql`
   query MarkersListQuery($location: QueryRadius) {
@@ -56,23 +66,35 @@ export default ({ latitude, longitude }) => (
         />);
       } else if (props) {
         return (
-          <MarkerClusterer
-            averageCenter
-            enableRetinaIcons
-            gridSize={60}
+          <GoogleMap
+            defaultZoom={15}
+            center={{ lat: latitude, lng: longitude }}
           >
-            {markers.map(item => (
-              <Marker
-                position={
+            <Marker
+              position={{ lat: latitude, lng: longitude }}
+              title="Jesteś tutaj"
+              animation={window.google.maps.Animation.DROP}
+              icon={PersonPinSVG}
+            />
+            <MarkersFilters />
+            <MarkerClusterer
+              averageCenter
+              enableRetinaIcons
+              gridSize={60}
+            >
+              {markers.map(item => (
+                <Marker
+                  position={
                   {
                     lat: Number(item.marker.geoJson.latitude),
                     lng: Number(item.marker.geoJson.longitude),
                   }
                 }
-                key={item.marker.id}
-              />
+                  key={item.marker.id}
+                />
             ))}
-          </MarkerClusterer>
+            </MarkerClusterer>
+          </GoogleMap>
         );
       }
       return <div>Loading</div>;
