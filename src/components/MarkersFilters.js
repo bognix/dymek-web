@@ -60,7 +60,6 @@ export default class MarkersFilters extends Component {
   }
 
   handleUserFilter(event, isChecked) {
-    // TODO issue new request on filter change
     event.preventDefault();
     event.stopPropagation();
 
@@ -103,7 +102,7 @@ export default class MarkersFilters extends Component {
             <MenuItem style={MenuItemStyle}>
               <Toggle
                 label="Tylko Twoje Zgłoszenia"
-                defaultToggled={false}
+                toggled={this.props.userFilter}
                 onToggle={this.handleUserFilter}
                 labelPosition="right"
               />

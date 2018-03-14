@@ -82,6 +82,7 @@ class MapPage extends Component {
 
   render() {
     const { latitude, longitude } = this.props;
+    const userFilter = !!this.state.queryVariables.userId;
 
     return (
       <QueryRenderer
@@ -114,7 +115,7 @@ class MapPage extends Component {
                     animation={window.google.maps.Animation.DROP}
                     icon={PersonPinSVG}
                   />
-                  <MarkersFilters onUserChange={this.handleUserFiler} />
+                  <MarkersFilters onUserChange={this.handleUserFiler} userFilter={userFilter} />
                   <BottomDrawer latitude={latitude} longitude={longitude} />
                   <MarkersList markers={markers} />
                 </GoogleMap>
