@@ -17,6 +17,7 @@ import { COLORS, COLOR_ERROR } from '../theme';
 import MarkersFilters from './MarkersFilters';
 import environment from '../relayEnvironment';
 import storage from '../storage';
+import { MARKER_TYPES } from '../consts';
 
 const PersonPinSVG = {
   ...PersonPin,
@@ -25,10 +26,9 @@ const PersonPinSVG = {
   fillOpacity: 1,
 };
 
-
 const MapPageQuery = graphql`
-  query MapPageQuery($location: QueryRadius, $userId: ID) {
-      markers(location: $location, userId: $userId, last: 100) @connection(key: "MapPage_markers", filters: []) {
+  query MapPageQuery($location: QueryRadius, $userId: ID, $types: [String]) {
+      markers(location: $location, userId: $userId, types: $types, last: 100) @connection(key: "MapPage_markers", filters: []) {
         edges {
           marker: node {
             createdAt,
@@ -49,6 +49,14 @@ class MapPage extends Component {
 
     const { latitude, longitude } = props;
 
+    this.initialMarkerTypes = Object.keys(MARKER_TYPES).reduce((acc, type) => ({
+      ...acc,
+      [type]: {
+        ...MARKER_TYPES[type],
+        checked: true,
+      },
+    }), {});
+
     this.state = {
       queryVariables: {
         location: {
@@ -56,14 +64,17 @@ class MapPage extends Component {
           longitude,
           radius: 1000,
         },
+        types: [],
         userId: null,
       },
+      markerTypes: this.initialMarkerTypes,
     };
 
-    this.handleUserFiler = this.handleUserFiler.bind(this);
+    this.handleUserFilter = this.handleUserFilter.bind(this);
+    this.handleTypesFilter = this.handleTypesFilter.bind(this);
   }
 
-  handleUserFiler(isChecked) {
+  handleUserFilter(isChecked) {
     if (isChecked) {
       this.setState({
         queryVariables: {
@@ -80,8 +91,42 @@ class MapPage extends Component {
     }
   }
 
+  handleTypesFilter(isChecked, type) {
+    const markerTypes = {
+      ...this.state.markerTypes,
+      [type]: {
+        ...this.state.markerTypes[type],
+        checked: isChecked,
+      },
+    };
+
+    const checkedTypes = Object.keys(markerTypes)
+      .filter(markerType => markerTypes[markerType].checked);
+
+    if (checkedTypes.length) {
+      this.setState({
+        queryVariables: {
+          ...this.state.queryVariables,
+          types: checkedTypes,
+        },
+        markerTypes,
+      });
+    } else {
+      const { types, ...queryVariables } = this.state.queryVariables;
+
+      this.setState({
+        queryVariables: {
+          ...queryVariables,
+          types: [],
+        },
+        markerTypes: this.initialMarkerTypes,
+      });
+    }
+  }
+
   render() {
     const { latitude, longitude } = this.props;
+    const { markerTypes } = this.state;
     const userFilter = !!this.state.queryVariables.userId;
 
     return (
@@ -106,7 +151,7 @@ class MapPage extends Component {
           } else if (props) {
               return (
                 <GoogleMap
-                  defaultZoom={15}
+                  defaultZoom={16}
                   center={{ lat: latitude, lng: longitude }}
                 >
                   <Marker
@@ -115,7 +160,12 @@ class MapPage extends Component {
                     animation={window.google.maps.Animation.DROP}
                     icon={PersonPinSVG}
                   />
-                  <MarkersFilters onUserChange={this.handleUserFiler} userFilter={userFilter} />
+                  <MarkersFilters
+                    onUserChange={this.handleUserFilter}
+                    userFilter={userFilter}
+                    markerTypes={markerTypes}
+                    onTypesChange={this.handleTypesFilter}
+                  />
                   <BottomDrawer latitude={latitude} longitude={longitude} />
                   <MarkersList markers={markers} />
                 </GoogleMap>

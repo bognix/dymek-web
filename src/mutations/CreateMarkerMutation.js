@@ -45,7 +45,7 @@ function commit(payload, errorCallback, successCallback) {
         const root = store.getRoot();
         const conn = ConnectionHandler.getConnection(
           root,
-          'MarkersList_markers',
+          'MapPage_markers',
         );
         ConnectionHandler.insertEdgeAfter(conn, newMarker);
       },

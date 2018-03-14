@@ -7,8 +7,6 @@ import FilterIcon from 'material-ui/svg-icons/image/tune';
 import Checkbox from 'material-ui/Checkbox';
 import MarkersFiltersStyles from './MarkersFilters.sass';
 
-import { MARKER_TYPES } from '../consts';
-
 const MenuItemStyle = {
   fontSize: 14,
   display: 'flex',
@@ -26,18 +24,9 @@ export default class MarkersFilters extends Component {
   constructor(props) {
     super(props);
 
-    const markerTypes = Object.keys(MARKER_TYPES).reduce((acc, type) => ({
-      ...acc,
-      [type]: {
-        ...MARKER_TYPES[type],
-        checked: true,
-      },
-    }), {});
-
     this.state = {
       open: false,
       anchorEl: null,
-      markerTypes,
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -66,21 +55,8 @@ export default class MarkersFilters extends Component {
     this.props.onUserChange(isChecked);
   }
 
-  handleCheckType(isChecked, type) {
-    // TODO issue new request on filter change
-    this.setState({
-      markerTypes: {
-        ...this.state.markerTypes,
-        [type]: {
-          ...this.state.markerTypes[type],
-          checked: isChecked,
-        },
-      },
-    });
-  }
-
   render() {
-    const menuItems = Object.keys(this.state.markerTypes);
+    const menuItems = Object.keys(this.props.markerTypes);
 
     return (
       <div className={MarkersFiltersStyles['markers-list']}>
@@ -112,8 +88,8 @@ export default class MarkersFilters extends Component {
                 <Checkbox
                   label={FILTERS_LABELS[type]}
                   labelPosition="right"
-                  onCheck={(event, isChecked) => this.handleCheckType(isChecked, type)}
-                  checked={this.state.markerTypes[type].checked}
+                  onCheck={(event, isChecked) => this.props.onTypesChange(isChecked, type)}
+                  checked={this.props.markerTypes[type].checked}
                 />
               </MenuItem>
             ))}
