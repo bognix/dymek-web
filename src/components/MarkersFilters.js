@@ -16,6 +16,12 @@ const MenuItemStyle = {
   justifyContent: 'space-between',
 };
 
+const FILTERS_LABELS = {
+  DOOG_POOP: 'Pokaż psie kupki',
+  ILLEGAL_PARKING: 'Pokaż nielegalne parkowanie',
+  CHIMNEY_SMOKE: 'Pokaż smród z komina',
+};
+
 export default class MarkersFilters extends Component {
   constructor(props) {
     super(props);
@@ -58,9 +64,17 @@ export default class MarkersFilters extends Component {
     console.log(isChecked, this.state);
   }
 
-  handleCheckType(event, type) {
+  handleCheckType(isChecked, type) {
     // TODO issue new request on filter change
-    console.log(event, type, this.state);
+    this.setState({
+      markerTypes: {
+        ...this.state.markerTypes,
+        [type]: {
+          ...this.state.markerTypes[type],
+          checked: isChecked,
+        },
+      },
+    });
   }
 
   render() {
@@ -94,10 +108,10 @@ export default class MarkersFilters extends Component {
             {menuItems.map(type => (
               <MenuItem style={MenuItemStyle} key={type}>
                 <Checkbox
-                  label={type}
+                  label={FILTERS_LABELS[type]}
                   labelPosition="right"
-                  onCheck={event => this.handleCheckType(event, type)}
-                  checked
+                  onCheck={(event, isChecked) => this.handleCheckType(isChecked, type)}
+                  checked={this.state.markerTypes[type].checked}
                 />
               </MenuItem>
             ))}
