@@ -30,7 +30,7 @@ const PersonPinSVG = {
 
 const MapPageQuery = graphql`
   query MapPageQuery($location: QueryRadius, $userId: ID, $types: [String]) {
-      markers(location: $location, userId: $userId, types: $types, last: 100) @connection(key: "MapPage_markers", filters: []) {
+      markers(location: $location, userId: $userId, types: $types, first: 100) @connection(key: "MapPage_markers", filters: []) {
         edges {
           marker: node {
             createdAt,
