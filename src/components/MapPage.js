@@ -19,6 +19,8 @@ import environment from '../relayEnvironment';
 import storage from '../storage';
 import { MARKER_TYPES } from '../consts';
 
+import MapPageStyles from './MapPage.sass';
+
 const PersonPinSVG = {
   ...PersonPin,
   fillColor: COLORS.accent1Color,
@@ -47,8 +49,6 @@ class MapPage extends Component {
   constructor(props) {
     super(props);
 
-    const { latitude, longitude } = props;
-
     this.initialMarkerTypes = Object.keys(MARKER_TYPES).reduce((acc, type) => ({
       ...acc,
       [type]: {
@@ -59,19 +59,59 @@ class MapPage extends Component {
 
     this.state = {
       queryVariables: {
-        location: {
-          latitude,
-          longitude,
-          radius: 1000,
-        },
         types: [],
         userId: null,
+        location: {
+          radius: 1000,
+          latitude: props.latitude,
+          longitude: props.longitude,
+        },
       },
       markerTypes: this.initialMarkerTypes,
+      center: {
+        latitude: props.latitude,
+        longitude: props.longitude,
+      },
     };
 
     this.handleUserFilter = this.handleUserFilter.bind(this);
     this.handleTypesFilter = this.handleTypesFilter.bind(this);
+    this.onDrag = this.onDrag.bind(this);
+    this.map = null;
+  }
+
+  componentWillReceiveProps({ latitude, longitude }) {
+    const { queryVariables } = this.state;
+    this.setState({
+      queryVariables: {
+        ...queryVariables,
+        location: {
+          latitude,
+          longitude,
+          radius: queryVariables.location.radius,
+        },
+      },
+      center: { latitude, longitude },
+    });
+  }
+
+  onDrag() {
+    const latitude = this.map.getCenter().lat();
+    const longitude = this.map.getCenter().lng();
+    const { queryVariables } = this.state;
+    this.setState({
+      queryVariables: {
+        ...queryVariables,
+        location: {
+          ...queryVariables.location,
+          latitude,
+          longitude,
+        },
+      },
+      center: {
+        latitude, longitude,
+      },
+    });
   }
 
   handleUserFilter(isChecked) {
@@ -92,28 +132,26 @@ class MapPage extends Component {
   }
 
   handleTypesFilter(isChecked, type) {
+    const { queryVariables, markerTypes: currentMarkerTypes } = this.state;
     const markerTypes = {
-      ...this.state.markerTypes,
+      ...currentMarkerTypes,
       [type]: {
-        ...this.state.markerTypes[type],
+        ...currentMarkerTypes[type],
         checked: isChecked,
       },
     };
-
     const checkedTypes = Object.keys(markerTypes)
       .filter(markerType => markerTypes[markerType].checked);
 
     if (checkedTypes.length) {
       this.setState({
         queryVariables: {
-          ...this.state.queryVariables,
+          ...queryVariables,
           types: checkedTypes,
         },
         markerTypes,
       });
     } else {
-      const { types, ...queryVariables } = this.state.queryVariables;
-
       this.setState({
         queryVariables: {
           ...queryVariables,
@@ -126,7 +164,7 @@ class MapPage extends Component {
 
   render() {
     const { latitude, longitude } = this.props;
-    const { markerTypes } = this.state;
+    const { markerTypes, center } = this.state;
     const userFilter = !!this.state.queryVariables.userId;
 
     return (
@@ -138,43 +176,46 @@ class MapPage extends Component {
           onTypesChange={this.handleTypesFilter}
         />
         <BottomDrawer latitude={latitude} longitude={longitude} />
-        <QueryRenderer
-          environment={environment}
-          query={MapPageQuery}
-          variables={this.state.queryVariables}
-          render={({ error, props }) => {
-          let markers = [];
-          if (props && props.markers && props.markers.edges) {
-            markers = props.markers.edges;
-          }
-          if (error) {
-            return (<Snackbar
-              open
-              message="Nie udało się pobrać znaczników"
-              autoHideDuration={4000}
-              bodyStyle={{
-                backgroundColor: COLOR_ERROR,
-              }}
-            />);
-          } else if (props) {
-              return (
-                <GoogleMap
-                  defaultZoom={16}
-                  center={{ lat: latitude, lng: longitude }}
-                >
-                  <Marker
-                    position={{ lat: latitude, lng: longitude }}
-                    title="Jesteś tutaj"
-                    animation={window.google.maps.Animation.DROP}
-                    icon={PersonPinSVG}
-                  />
-                  <MarkersList markers={markers} />
-                </GoogleMap>
-            );
-          }
-            return <span>Loading</span>;
-        }}
-        />
+        <GoogleMap
+          defaultZoom={16}
+          options={{ fullscreenControl: false, minZoom: 12 }}
+          center={{ lat: center.latitude, lng: center.longitude }}
+          onDragEnd={this.onDrag}
+          ref={(map) => { this.map = map; }}
+        >
+          <Marker
+            position={{ lat: latitude, lng: longitude }}
+            title="Jesteś tutaj"
+            animation={window.google.maps.Animation.DROP}
+            icon={PersonPinSVG}
+          />
+
+          <QueryRenderer
+            environment={environment}
+            query={MapPageQuery}
+            variables={this.state.queryVariables}
+            render={({ error, props }) => {
+            let markers = [];
+            if (props && props.markers && props.markers.edges) {
+              markers = props.markers.edges;
+            }
+            if (error) {
+              return (<Snackbar
+                open
+                message="Nie udało się pobrać znaczników"
+                autoHideDuration={4000}
+                bodyStyle={{
+                  backgroundColor: COLOR_ERROR,
+                }}
+              />);
+            } else if (props) {
+                return <MarkersList markers={markers} />;
+            }
+              return <span className={MapPageStyles.loader}>Loading</span>;
+          }}
+          />
+        </GoogleMap>
+
       </div>
     );
   }

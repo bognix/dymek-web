@@ -14,13 +14,20 @@ export default (WrappedComponent) => {
       this.geoSuccess = this.geoSuccess.bind(this);
     }
     componentWillMount() {
-      navigator.geolocation.getCurrentPosition(this.geoSuccess);
+      navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError);
     }
 
     geoSuccess(position) {
       this.setState({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
+      });
+    }
+
+    geoError() {
+      this.setState({
+        longitude: 16.931992,
+        latitude: 52.409538,
       });
     }
 
