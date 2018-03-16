@@ -12,6 +12,7 @@ export default (WrappedComponent) => {
       };
 
       this.geoSuccess = this.geoSuccess.bind(this);
+      this.geoError = this.geoError.bind(this);
     }
     componentWillMount() {
       navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError);

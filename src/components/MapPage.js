@@ -62,7 +62,7 @@ class MapPage extends Component {
         types: [],
         userId: null,
         location: {
-          radius: 1000,
+          radius: 0,
           latitude: props.latitude,
           longitude: props.longitude,
         },
@@ -77,6 +77,8 @@ class MapPage extends Component {
     this.handleUserFilter = this.handleUserFilter.bind(this);
     this.handleTypesFilter = this.handleTypesFilter.bind(this);
     this.onDrag = this.onDrag.bind(this);
+    this.onMapMounted = this.onMapMounted.bind(this);
+    this.onRadiusChanged = this.onRadiusChanged.bind(this);
     this.map = null;
   }
 
@@ -86,13 +88,17 @@ class MapPage extends Component {
       queryVariables: {
         ...queryVariables,
         location: {
+          ...queryVariables.location,
           latitude,
           longitude,
-          radius: queryVariables.location.radius,
         },
       },
       center: { latitude, longitude },
     });
+  }
+
+  onMapMounted(map) {
+    this.map = map;
   }
 
   onDrag() {
@@ -110,6 +116,26 @@ class MapPage extends Component {
       },
       center: {
         latitude, longitude,
+      },
+    });
+  }
+
+  onRadiusChanged() {
+    const radius = window.google.maps.geometry.spherical
+      .computeDistanceBetween(
+        this.map.getBounds().getNorthEast(),
+        this.map.getBounds().getSouthWest(),
+      );
+    const { queryVariables } = this.state;
+    const radiusToSet = Math.ceil(radius * 1.5);
+
+    this.setState({
+      queryVariables: {
+        ...queryVariables,
+        location: {
+          ...queryVariables.location,
+          radius: radiusToSet,
+        },
       },
     });
   }
@@ -181,7 +207,9 @@ class MapPage extends Component {
           options={{ fullscreenControl: false, minZoom: 12 }}
           center={{ lat: center.latitude, lng: center.longitude }}
           onDragEnd={this.onDrag}
-          ref={(map) => { this.map = map; }}
+          onZoomChanged={this.onRadiusChanged}
+          onTilesLoaded={this.onRadiusChanged}
+          ref={this.onMapMounted}
         >
           <Marker
             position={{ lat: latitude, lng: longitude }}
