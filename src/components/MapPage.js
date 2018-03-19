@@ -39,6 +39,7 @@ const MapPageQuery = graphql`
               longitude
             },
             id
+            type
           }
         }
       }
