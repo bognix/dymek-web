@@ -6,7 +6,7 @@ import Smoke from 'material-ui/svg-icons/places/smoking-rooms';
 import Done from 'material-ui/svg-icons/action/done';
 
 import AddMarker from './AddMarker';
-import BottomDrawerStyles from './BottomDrawer.sass';
+import BottomDrawerStyles from '../styles/BottomDrawer.sass';
 
 class BottomDrawer extends Component {
   constructor(props) {

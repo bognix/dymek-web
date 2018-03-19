@@ -5,7 +5,7 @@ import Toggle from 'material-ui/Toggle';
 import { Menu, MenuItem } from 'material-ui/Menu';
 import FilterIcon from 'material-ui/svg-icons/image/tune';
 import Checkbox from 'material-ui/Checkbox';
-import MarkersFiltersStyles from './MarkersFilters.sass';
+import MarkersFiltersStyles from '../styles/MarkersFilters.sass';
 
 const MenuItemStyle = {
   fontSize: 14,

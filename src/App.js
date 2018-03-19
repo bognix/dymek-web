@@ -9,7 +9,7 @@ import NotFound from './components/NotFound';
 import storage from './storage';
 
 
-import AppStyles from './App.sass';
+import AppStyles from './styles/App.sass';
 
 const user = storage.get('dymek-user');
 if (!user) {

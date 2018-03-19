@@ -19,7 +19,7 @@ import environment from '../relayEnvironment';
 import storage from '../storage';
 import { MARKER_TYPES } from '../consts';
 
-import MapPageStyles from './MapPage.sass';
+import MapPageStyles from '../styles/MapPage.sass';
 
 const PersonPinSVG = {
   ...PersonPin,
@@ -239,7 +239,11 @@ class MapPage extends Component {
             } else if (props) {
                 return <MarkersList markers={markers} />;
             }
-              return <span className={MapPageStyles.loader}>Loading</span>;
+            return (
+              <div className={MapPageStyles.loader}>
+                <i className="fas fa-spinner fa-pulse fa-2x" />
+              </div>
+            );
           }}
           />
         </GoogleMap>
@@ -253,7 +257,7 @@ export default compose(
   withProps({
     googleMapURL: 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAOu0YNN7QMQuY-Ki9bK0KwLYN9jVP78nM&libraries=geometry,drawing,places',
     loadingElement: <div style={{ height: '100%' }} />,
-    containerElement: <div style={{ height: '66vh' }} />,
+    containerElement: <div style={{ height: '66vh', position: 'relative' }} />,
     mapElement: <div style={{ height: '100%' }} />,
   }),
   withGeolocation,
