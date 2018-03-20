@@ -10,7 +10,6 @@ import {
 import Snackbar from 'material-ui/Snackbar';
 
 import MarkerClusters from './MarkerClusters';
-import BottomDrawer from './BottomDrawer';
 import PersonPin from '../svgs/personPin';
 import withGeolocation from '../hocs/withGeolocation';
 import { COLORS, COLOR_ERROR } from '../theme';
@@ -18,8 +17,9 @@ import MarkersFilters from './MarkersFilters';
 import environment from '../relayEnvironment';
 import storage from '../storage';
 import { MARKER_TYPES } from '../consts';
+import MarkersList from './MarkersList';
 
-import MapPageStyles from '../styles/MapPage.sass';
+import ReportPageStyles from '../styles/ReportPage.sass';
 
 const PersonPinSVG = {
   ...PersonPin,
@@ -28,9 +28,9 @@ const PersonPinSVG = {
   fillOpacity: 1,
 };
 
-const MapPageQuery = graphql`
-  query MapPageQuery($location: QueryRadius, $userId: ID, $types: [String]) {
-      markers(location: $location, userId: $userId, types: $types, first: 100) @connection(key: "MapPage_markers", filters: []) {
+const ReportPageQuery = graphql`
+  query ReportPageQuery($location: QueryRadius, $userId: ID, $types: [String]) {
+      markers(location: $location, userId: $userId, types: $types, first: 100) @connection(key: "ReportPage_markers", filters: []) {
         edges {
           marker: node {
             createdAt,
@@ -46,7 +46,7 @@ const MapPageQuery = graphql`
   }
 `;
 
-class MapPage extends Component {
+class ReportPage extends Component {
   constructor(props) {
     super(props);
 
@@ -128,7 +128,7 @@ class MapPage extends Component {
         this.map.getBounds().getSouthWest(),
       );
     const { queryVariables } = this.state;
-    const radiusToSet = Math.ceil(radius * 1.5);
+    const radiusToSet = Math.ceil(radius);
 
     this.setState({
       queryVariables: {
@@ -202,28 +202,12 @@ class MapPage extends Component {
           markerTypes={markerTypes}
           onTypesChange={this.handleTypesFilter}
         />
-        <BottomDrawer latitude={latitude} longitude={longitude} />
-        <GoogleMap
-          defaultZoom={16}
-          options={{ fullscreenControl: false, minZoom: 12, streetViewControl: false }}
-          center={{ lat: center.latitude, lng: center.longitude }}
-          onDragEnd={this.onDrag}
-          onZoomChanged={this.onRadiusChanged}
-          onTilesLoaded={this.onRadiusChanged}
-          ref={this.onMapMounted}
-        >
-          <Marker
-            position={{ lat: latitude, lng: longitude }}
-            title="Jesteś tutaj"
-            animation={window.google.maps.Animation.DROP}
-            icon={PersonPinSVG}
-          />
 
-          <QueryRenderer
-            environment={environment}
-            query={MapPageQuery}
-            variables={this.state.queryVariables}
-            render={({ error, props }) => {
+        <QueryRenderer
+          environment={environment}
+          query={ReportPageQuery}
+          variables={this.state.queryVariables}
+          render={({ error, props }) => {
             let markers = [];
             if (props && props.markers && props.markers.edges) {
               markers = props.markers.edges;
@@ -238,17 +222,36 @@ class MapPage extends Component {
                 }}
               />);
             } else if (props) {
-                return <MarkerClusters markers={markers} />;
+              return (
+                <div>
+                  <GoogleMap
+                    defaultZoom={16}
+                    options={{ fullscreenControl: false, minZoom: 12, streetViewControl: false }}
+                    center={{ lat: center.latitude, lng: center.longitude }}
+                    onDragEnd={this.onDrag}
+                    onZoomChanged={this.onRadiusChanged}
+                    onTilesLoaded={this.onRadiusChanged}
+                    ref={this.onMapMounted}
+                  >
+                    <Marker
+                      position={{ lat: latitude, lng: longitude }}
+                      title="Jesteś tutaj"
+                      animation={window.google.maps.Animation.DROP}
+                      icon={PersonPinSVG}
+                    />
+                    <MarkerClusters markers={markers} />;
+                  </GoogleMap>
+                  <MarkersList markers={markers} />
+                </div>
+              );
             }
             return (
-              <div className={MapPageStyles.loader}>
+              <div className={ReportPageStyles.loader}>
                 <i className="fas fa-spinner fa-pulse fa-2x" />
               </div>
             );
           }}
-          />
-        </GoogleMap>
-
+        />
       </div>
     );
   }
@@ -264,4 +267,4 @@ export default compose(
   withGeolocation,
   withScriptjs,
   withGoogleMap,
-)(MapPage);
+)(ReportPage);
