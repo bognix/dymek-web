@@ -29,21 +29,23 @@ const MarkersList = ({ markers }) => (
           <TableRowColumn>bla bla</TableRowColumn>
           <TableRowColumn>{item.marker.type}</TableRowColumn>
           <TableRowColumn>
-            <RaisedButton
-              label="Odrzuć"
-              backgroundColor={COLOR_ERROR}
-              labelColor={COLORS.alternateTextColor}
-            />
-            <RaisedButton
-              label="Przyjmij"
-              backgroundColor={COLOR_WARN}
-              labelColor={COLORS.alternateTextColor}
-            />
-            <RaisedButton
-              label="Rozwiąż"
-              backgroundColor={COLOR_SUCCESS}
-              labelColor={COLORS.alternateTextColor}
-            />
+            <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: 350 }}>
+              <RaisedButton
+                label="Rozwiąż"
+                backgroundColor={COLOR_SUCCESS}
+                labelColor={COLORS.alternateTextColor}
+              />
+              <RaisedButton
+                label="Przyjmij"
+                backgroundColor={COLOR_WARN}
+                labelColor={COLORS.alternateTextColor}
+              />
+              <RaisedButton
+                label="Odrzuć"
+                backgroundColor={COLOR_ERROR}
+                labelColor={COLORS.alternateTextColor}
+              />
+            </div>
           </TableRowColumn>
         </TableRow>
       ))}

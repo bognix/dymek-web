@@ -239,7 +239,7 @@ class ReportPage extends Component {
                       animation={window.google.maps.Animation.DROP}
                       icon={PersonPinSVG}
                     />
-                    <MarkerClusters markers={markers} />;
+                    <MarkerClusters markers={markers} />
                   </GoogleMap>
                   <MarkersList markers={markers} />
                 </div>

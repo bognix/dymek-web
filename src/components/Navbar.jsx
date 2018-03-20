@@ -51,6 +51,9 @@ class Navbar extends React.Component {
           <NavLink to="/map" className="ml1 no-underline black" onClick={this.handleClose}>
             <MenuItem>Mapa</MenuItem>
           </NavLink>
+          <NavLink to="/report" className="ml1 no-underline black" onClick={this.handleClose}>
+            <MenuItem>Raport</MenuItem>
+          </NavLink>
         </Drawer>
       </div>
     );
