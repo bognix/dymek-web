@@ -227,7 +227,7 @@ class ReportPage extends Component {
                   <GoogleMap
                     defaultZoom={16}
                     options={{ fullscreenControl: false, minZoom: 12, streetViewControl: false }}
-                    center={{ lat: center.latitude, lng: center.longitude }}
+                    defaultCenter={{ lat: center.latitude, lng: center.longitude }}
                     onDragEnd={this.onDrag}
                     onZoomChanged={this.onRadiusChanged}
                     onTilesLoaded={this.onRadiusChanged}
