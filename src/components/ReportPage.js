@@ -94,7 +94,6 @@ class ReportPage extends Component {
           longitude,
         },
       },
-      center: { latitude, longitude },
     });
   }
 
@@ -115,9 +114,6 @@ class ReportPage extends Component {
           longitude,
         },
       },
-      center: {
-        latitude, longitude,
-      },
     });
   }
 
@@ -128,7 +124,7 @@ class ReportPage extends Component {
         this.map.getBounds().getSouthWest(),
       );
     const { queryVariables } = this.state;
-    const radiusToSet = Math.ceil(radius);
+    const radiusToSet = Math.ceil(radius / 2.5);
 
     this.setState({
       queryVariables: {
@@ -203,11 +199,26 @@ class ReportPage extends Component {
           onTypesChange={this.handleTypesFilter}
         />
 
-        <QueryRenderer
-          environment={environment}
-          query={ReportPageQuery}
-          variables={this.state.queryVariables}
-          render={({ error, props }) => {
+        <GoogleMap
+          defaultZoom={16}
+          options={{ fullscreenControl: false, minZoom: 12, streetViewControl: false }}
+          defaultCenter={{ lat: center.latitude, lng: center.longitude }}
+          onDragEnd={this.onDrag}
+          onZoomChanged={this.onRadiusChanged}
+          onTilesLoaded={this.onRadiusChanged}
+          ref={this.onMapMounted}
+        >
+          <Marker
+            position={{ lat: latitude, lng: longitude }}
+            title="Jesteś tutaj"
+            animation={window.google.maps.Animation.DROP}
+            icon={PersonPinSVG}
+          />
+          <QueryRenderer
+            environment={environment}
+            query={ReportPageQuery}
+            variables={this.state.queryVariables}
+            render={({ error, props }) => {
             let markers = [];
             if (props && props.markers && props.markers.edges) {
               markers = props.markers.edges;
@@ -224,23 +235,7 @@ class ReportPage extends Component {
             } else if (props) {
               return (
                 <div>
-                  <GoogleMap
-                    defaultZoom={16}
-                    options={{ fullscreenControl: false, minZoom: 12, streetViewControl: false }}
-                    defaultCenter={{ lat: center.latitude, lng: center.longitude }}
-                    onDragEnd={this.onDrag}
-                    onZoomChanged={this.onRadiusChanged}
-                    onTilesLoaded={this.onRadiusChanged}
-                    ref={this.onMapMounted}
-                  >
-                    <Marker
-                      position={{ lat: latitude, lng: longitude }}
-                      title="Jesteś tutaj"
-                      animation={window.google.maps.Animation.DROP}
-                      icon={PersonPinSVG}
-                    />
-                    <MarkerClusters markers={markers} />
-                  </GoogleMap>
+                  <MarkerClusters markers={markers} />
                   <MarkersList markers={markers} />
                 </div>
               );
@@ -251,7 +246,8 @@ class ReportPage extends Component {
               </div>
             );
           }}
-        />
+          />
+        </GoogleMap>
       </div>
     );
   }
