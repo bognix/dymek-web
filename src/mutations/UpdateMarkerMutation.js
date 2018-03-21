@@ -24,7 +24,7 @@ const mutation = graphql`
 
 let tempID = 0;
 
-function commit(payload, errorCallback, successCallback) {
+function commit(payload, successCallback, errorCallback) {
   tempID += 1;
   return commitMutation(
     environment,
