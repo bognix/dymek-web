@@ -9,8 +9,12 @@ import {
 } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 import { COLOR_ERROR, COLOR_SUCCESS, COLOR_WARN, COLORS } from '../theme';
+import UpdateMarkerMutation from '../mutations/UpdateMarkerMutation';
 
-const tableHeaders = ['#', 'data', 'adres', 'typ zgłoszenia', 'akcje'];
+const tableHeaders = ['#', 'data', 'adres', 'typ zgłoszenia', 'status', 'akcje'];
+const changeStatus = (id, status) => {
+  UpdateMarkerMutation.commit({ status, id }, console.log, console.log);
+};
 
 const MarkersList = ({ markers }) => (
   <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }}>
@@ -28,22 +32,26 @@ const MarkersList = ({ markers }) => (
           <TableRowColumn>{item.marker.createdAt}</TableRowColumn>
           <TableRowColumn>bla bla</TableRowColumn>
           <TableRowColumn>{item.marker.type}</TableRowColumn>
+          <TableRowColumn>{item.marker.status}</TableRowColumn>
           <TableRowColumn>
             <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: 350 }}>
               <RaisedButton
                 label="Rozwiąż"
                 backgroundColor={COLOR_SUCCESS}
                 labelColor={COLORS.alternateTextColor}
+                onClick={() => changeStatus(item.marker.id, 'RESOLVED')}
               />
               <RaisedButton
                 label="Przyjmij"
                 backgroundColor={COLOR_WARN}
                 labelColor={COLORS.alternateTextColor}
+                onClick={() => changeStatus(item.marker.id, 'ACKNOWLEDGED')}
               />
               <RaisedButton
                 label="Odrzuć"
                 backgroundColor={COLOR_ERROR}
                 labelColor={COLORS.alternateTextColor}
+                onClick={() => changeStatus(item.marker.id, 'REJECTED')}
               />
             </div>
           </TableRowColumn>

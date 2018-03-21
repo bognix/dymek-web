@@ -39,7 +39,8 @@ const ReportPageQuery = graphql`
               longitude
             },
             id
-            type
+            type,
+            status
           }
         }
       }

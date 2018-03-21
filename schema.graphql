@@ -1,5 +1,5 @@
 # source: http://localhost:3000/api/q
-# timestamp: Wed Mar 21 2018 09:18:56 GMT+0100 (CET)
+# timestamp: Wed Mar 21 2018 19:50:46 GMT+0100 (CET)
 
 schema {
   query: Root
@@ -31,6 +31,7 @@ type Marker implements Node {
   geoJson: geo
   hashKey: String
   geoHash: String
+  status: String
 }
 
 """A connection to a list of items."""
@@ -54,6 +55,7 @@ type MarkerEdge {
 type Mutation {
   createMarker(input: CreateMarkerInput!): CreateMarkerPayload
   updateOrCreateUser(input: UpdateOrCreateUserInput!): UpdateOrCreateUserPayload
+  updateMarker(input: UpdateMarkerInput!): UpdateMarkerPayload
 }
 
 """An object with an ID"""
@@ -91,6 +93,17 @@ type Root {
     """The ID of an object"""
     id: ID!
   ): Node
+}
+
+input UpdateMarkerInput {
+  status: String
+  id: ID
+  clientMutationId: String
+}
+
+type UpdateMarkerPayload {
+  markerEdge: MarkerEdge
+  clientMutationId: String
 }
 
 input UpdateOrCreateUserInput {
