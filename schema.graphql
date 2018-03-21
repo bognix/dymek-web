@@ -1,5 +1,5 @@
-# source: http://localhost:3000/api/markers
-# timestamp: Wed Mar 14 2018 20:40:16 GMT+0100 (CET)
+# source: http://localhost:3000/api/q
+# timestamp: Wed Mar 21 2018 09:18:56 GMT+0100 (CET)
 
 schema {
   query: Root
@@ -26,7 +26,7 @@ type geo {
 type Marker implements Node {
   id: ID!
   createdAt: String
-  userId: ID
+  user: User
   type: String
   geoJson: geo
   hashKey: String
@@ -53,6 +53,7 @@ type MarkerEdge {
 
 type Mutation {
   createMarker(input: CreateMarkerInput!): CreateMarkerPayload
+  updateOrCreateUser(input: UpdateOrCreateUserInput!): UpdateOrCreateUserPayload
 }
 
 """An object with an ID"""
@@ -90,4 +91,19 @@ type Root {
     """The ID of an object"""
     id: ID!
   ): Node
+}
+
+input UpdateOrCreateUserInput {
+  registrationToken: String
+  clientMutationId: String
+}
+
+type UpdateOrCreateUserPayload {
+  user: User
+  clientMutationId: String
+}
+
+type User {
+  userId: ID
+  registrationToken: String
 }

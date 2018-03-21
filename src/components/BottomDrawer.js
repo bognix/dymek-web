@@ -14,12 +14,12 @@ class BottomDrawer extends Component {
 
     this.state = {
       markerTypes: {
-        DOOG_POOP: {
+        DOG_POOP: {
           title: 'Zgłoś Kupkę',
           titleSuccess: 'Dziękujemy za zgłoszenie kupki w Twojej okolicy!',
           icon: <Pets className={BottomDrawerStyles.icon} />,
           iconSuccess: <Done className={BottomDrawerStyles['icon-success']} />,
-          value: 'DOOG_POOP',
+          value: 'DOG_POOP',
           canPost: true,
         },
         ILLEGAL_PARKING: {

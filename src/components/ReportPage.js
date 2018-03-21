@@ -69,10 +69,6 @@ class ReportPage extends Component {
         },
       },
       markerTypes: this.initialMarkerTypes,
-      center: {
-        latitude: props.latitude,
-        longitude: props.longitude,
-      },
     };
 
     this.handleUserFilter = this.handleUserFilter.bind(this);
@@ -124,7 +120,7 @@ class ReportPage extends Component {
         this.map.getBounds().getSouthWest(),
       );
     const { queryVariables } = this.state;
-    const radiusToSet = Math.ceil(radius / 2.5);
+    const radiusToSet = Math.ceil(radius / 2.3);
 
     this.setState({
       queryVariables: {
@@ -187,8 +183,9 @@ class ReportPage extends Component {
 
   render() {
     const { latitude, longitude } = this.props;
-    const { markerTypes, center } = this.state;
+    const { markerTypes } = this.state;
     const userFilter = !!this.state.queryVariables.userId;
+    console.log(latitude, longitude, '.....should rerender');
 
     return (
       <div>
@@ -202,7 +199,7 @@ class ReportPage extends Component {
         <GoogleMap
           defaultZoom={16}
           options={{ fullscreenControl: false, minZoom: 12, streetViewControl: false }}
-          defaultCenter={{ lat: center.latitude, lng: center.longitude }}
+          defaultCenter={{ lat: latitude, lng: longitude }}
           onDragEnd={this.onDrag}
           onZoomChanged={this.onRadiusChanged}
           onTilesLoaded={this.onRadiusChanged}

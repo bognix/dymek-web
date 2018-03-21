@@ -4,7 +4,7 @@
       "schemaPath": "schema.graphql",
       "extensions": {
         "endpoints": {
-          "local": "http://localhost:3000/api/markers"
+          "local": "http://localhost:3000/api/q"
         }
       }
     }

@@ -1,6 +1,6 @@
 export const MARKER_TYPES = {
-  DOOG_POOP: {
-    value: 'DOOG_POOP',
+  DOG_POOP: {
+    value: 'DOG_POOP',
   },
   ILLEGAL_PARKING: {
     value: 'ILLEGAL_PARKING',

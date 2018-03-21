@@ -69,10 +69,6 @@ class MapPage extends Component {
         },
       },
       markerTypes: this.initialMarkerTypes,
-      center: {
-        latitude: props.latitude,
-        longitude: props.longitude,
-      },
     };
 
     this.handleUserFilter = this.handleUserFilter.bind(this);
@@ -94,7 +90,6 @@ class MapPage extends Component {
           longitude,
         },
       },
-      center: { latitude, longitude },
     });
   }
 
@@ -114,9 +109,6 @@ class MapPage extends Component {
           latitude,
           longitude,
         },
-      },
-      center: {
-        latitude, longitude,
       },
     });
   }
@@ -191,7 +183,7 @@ class MapPage extends Component {
 
   render() {
     const { latitude, longitude } = this.props;
-    const { markerTypes, center } = this.state;
+    const { markerTypes, queryVariables } = this.state;
     const userFilter = !!this.state.queryVariables.userId;
 
     return (
@@ -206,7 +198,7 @@ class MapPage extends Component {
         <GoogleMap
           defaultZoom={16}
           options={{ fullscreenControl: false, minZoom: 12, streetViewControl: false }}
-          center={{ lat: center.latitude, lng: center.longitude }}
+          defaultCenter={{ lat: latitude, lng: longitude }}
           onDragEnd={this.onDrag}
           onZoomChanged={this.onRadiusChanged}
           onTilesLoaded={this.onRadiusChanged}
@@ -222,7 +214,7 @@ class MapPage extends Component {
           <QueryRenderer
             environment={environment}
             query={MapPageQuery}
-            variables={this.state.queryVariables}
+            variables={queryVariables}
             render={({ error, props }) => {
             let markers = [];
             if (props && props.markers && props.markers.edges) {
@@ -248,7 +240,6 @@ class MapPage extends Component {
           }}
           />
         </GoogleMap>
-
       </div>
     );
   }
