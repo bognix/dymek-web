@@ -20,28 +20,6 @@ const AppThemed = () => (
 ReactDOM.render(<AppThemed />, document.getElementById('root'));
 registerServiceWorker();
 
-// function displayNotification() {
-//   if (Notification.permission === 'granted') {
-//     navigator.serviceWorker.getRegistration().then((reg) => {
-//       const options = {
-//         body: 'Here is a notification body!',
-//         icon: 'images/example.png',
-//         vibrate: [100, 50, 100],
-//         data: {
-//           dateOfArrival: Date.now(),
-//           primaryKey: 1,
-//         },
-//       };
-//       reg.showNotification('Hello world!', options);
-//     });
-//   }
-// }
-
-// Notification.requestPermission((status) => {
-//   console.log('Notification permission status:', status);
-//   displayNotification();
-// });
-
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -54,7 +32,6 @@ const config = {
 if ('serviceWorker' in navigator) {
   runtime.register()
     .then((registration) => {
-      console.log(registration, '.....');
       firebase.initializeApp(config);
 
       const messaging = firebase.messaging();
@@ -100,7 +77,7 @@ if ('serviceWorker' in navigator) {
             // Send Instance ID token to app server.
             // sendTokenToServer(refreshedToken);
             // ...
-            console.log(refreshedToken);
+            console.log(refreshedToken, '....token refreshed');
           })
           .catch((err) => {
             console.log('Unable to retrieve refreshed token ', err);
@@ -109,5 +86,20 @@ if ('serviceWorker' in navigator) {
       });
 
       messaging.useServiceWorker(registration);
+
+      messaging.onMessage((payload) => {
+        console.log('Message received. ', payload);
+        const options = {
+          body: 'Here is a notification body!',
+          icon: 'images/example.png',
+          vibrate: [100, 50, 100],
+          data: {
+            dateOfArrival: Date.now(),
+            primaryKey: 1,
+          },
+        };
+        registration.showNotification('Hello world!', options);
+      // ...
+      });
     });
 }

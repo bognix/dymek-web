@@ -19,7 +19,6 @@ const mutation = graphql`
 let tempID = 0;
 
 function commit(payload) {
-  console.log('....commiting');
   tempID += 1;
   return commitMutation(
     environment,
@@ -32,7 +31,6 @@ function commit(payload) {
         },
       },
       onError: console.error,
-      onCompleted: console.log,
     },
   );
 }
