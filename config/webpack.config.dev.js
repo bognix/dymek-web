@@ -293,7 +293,8 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new ExtractTextPlugin({ filename: 'styles.css', allChunks: true}),
     new ServiceWorkerWebpackPlugin({
-      entry: path.join(paths.appSrc, 'firebase-messaging-sw.js')
+      entry: path.join(paths.appSrc, 'firebase-messaging-sw.js'),
+      filename: 'messaging-sw.js'
     })
   ],
   // Some libraries import Node modules but don't use them in the browser.
