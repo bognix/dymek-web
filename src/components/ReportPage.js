@@ -1,5 +1,3 @@
-/* eslint react/jsx-filename-extension: "off" */
-
 import React, { Component } from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import { compose, withProps } from 'recompose';
@@ -186,7 +184,6 @@ class ReportPage extends Component {
     const { latitude, longitude } = this.props;
     const { markerTypes } = this.state;
     const userFilter = !!this.state.queryVariables.userId;
-    console.log(latitude, longitude, '.....should rerender');
 
     return (
       <div>

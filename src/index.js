@@ -49,57 +49,36 @@ if ('serviceWorker' in navigator) {
         .then((currentToken) => {
           if (currentToken) {
             UpdateOrCreateUserMutation.commit({ token: currentToken });
-            // sendTokenToServer(currentToken);
-            // updateUIForPushEnabled(currentToken);
-            console.log(currentToken, '....current token');
           } else {
-            // Show permission request.
-            console.log('No Instance ID token available. Request permission to generate one.');
-            // Show permission UI.
-            // updateUIForPushPermissionRequired();
-            // setTokenSentToServer(false);
+            console.error('No Instance ID token available. Request permission to generate one.');
           }
         })
         .catch((err) => {
-          console.log('An error occurred while retrieving token. ', err);
-          // showToken('Error retrieving Instance ID token. ', err);
-          // setTokenSentToServer(false);
+          console.error('An error occurred while retrieving token. ', err);
         });
 
       messaging.onTokenRefresh(() => {
         messaging.getToken()
           .then((refreshedToken) => {
             UpdateOrCreateUserMutation.commit({ token: refreshedToken });
-            console.log('Token refreshed.');
-            // Indicate that the new Instance ID token has not yet been sent to the
-            // app server.
-            // setTokenSentToServer(false);
-            // Send Instance ID token to app server.
-            // sendTokenToServer(refreshedToken);
-            // ...
-            console.log(refreshedToken, '....token refreshed');
           })
           .catch((err) => {
-            console.log('Unable to retrieve refreshed token ', err);
-            // showToken('Unable to retrieve refreshed token ', err);
+            console.error('Unable to retrieve refreshed token ', err);
           });
       });
 
       messaging.useServiceWorker(registration);
 
       messaging.onMessage((payload) => {
-        console.log('Message received. ', payload);
         const options = {
-          body: 'Here is a notification body!',
-          icon: 'images/example.png',
+          body: payload.data.body,
           vibrate: [100, 50, 100],
           data: {
             dateOfArrival: Date.now(),
             primaryKey: 1,
           },
         };
-        registration.showNotification('Hello world!', options);
-      // ...
+        registration.showNotification(payload.data.title, options);
       });
     });
 }

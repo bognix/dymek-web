@@ -1,5 +1,6 @@
 config/
 src/registerServiceWorker.js
+src/firebase-messaging-sw.js
 src/aws-exports.js
 node_modules/
 build/
