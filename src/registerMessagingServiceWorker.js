@@ -16,6 +16,7 @@ export default function () {
   if ('serviceWorker' in navigator) {
     runtime.register()
       .then((registration) => {
+        console.log('....inside then.....');
         firebase.initializeApp(config);
         const messaging = firebase.messaging();
         messaging.usePublicVapidKey(process.env.REACT_APP_VAPID_KEY);
@@ -24,6 +25,7 @@ export default function () {
 
         messaging.getToken()
           .then((currentToken) => {
+            console.log('....get token....');
             if (currentToken) {
               UpdateOrCreateUserMutation.commit({ token: currentToken });
             } else {
