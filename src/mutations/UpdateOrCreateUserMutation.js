@@ -20,7 +20,6 @@ let tempID = 0;
 
 function commit(payload) {
   tempID += 1;
-  console.log('commiting new user....');
   return commitMutation(
     environment,
     {
