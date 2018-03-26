@@ -15,7 +15,7 @@ const MenuItemStyle = {
 };
 
 const FILTERS_LABELS = {
-  DOOG_POOP: 'Pokaż psie kupki',
+  DOG_POOP: 'Pokaż psie kupki',
   ILLEGAL_PARKING: 'Pokaż nielegalne parkowanie',
   CHIMNEY_SMOKE: 'Pokaż smród z komina',
 };

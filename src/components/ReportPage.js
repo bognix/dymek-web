@@ -1,5 +1,3 @@
-/* eslint react/jsx-filename-extension: "off" */
-
 import React, { Component } from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import { compose, withProps } from 'recompose';
@@ -10,7 +8,6 @@ import {
 import Snackbar from 'material-ui/Snackbar';
 
 import MarkerClusters from './MarkerClusters';
-import BottomDrawer from './BottomDrawer';
 import PersonPin from '../svgs/personPin';
 import withGeolocation from '../hocs/withGeolocation';
 import { COLORS, COLOR_ERROR } from '../theme';
@@ -18,8 +15,9 @@ import MarkersFilters from './MarkersFilters';
 import environment from '../relayEnvironment';
 import storage from '../storage';
 import { MARKER_TYPES } from '../consts';
+import MarkersList from './MarkersList';
 
-import MapPageStyles from '../styles/MapPage.sass';
+import ReportPageStyles from '../styles/ReportPage.sass';
 
 const PersonPinSVG = {
   ...PersonPin,
@@ -28,9 +26,9 @@ const PersonPinSVG = {
   fillOpacity: 1,
 };
 
-const MapPageQuery = graphql`
-  query MapPageQuery($location: QueryRadius, $userId: ID, $types: [String]) {
-      markers(location: $location, userId: $userId, types: $types, first: 100) @connection(key: "MapPage_markers", filters: []) {
+const ReportPageQuery = graphql`
+  query ReportPageQuery($location: QueryRadius, $userId: ID, $types: [String]) {
+      markers(location: $location, userId: $userId, types: $types, first: 100) @connection(key: "ReportPage_markers", filters: []) {
         edges {
           marker: node {
             createdAt,
@@ -39,14 +37,15 @@ const MapPageQuery = graphql`
               longitude
             },
             id
-            type
+            type,
+            status
           }
         }
       }
   }
 `;
 
-class MapPage extends Component {
+class ReportPage extends Component {
   constructor(props) {
     super(props);
 
@@ -120,7 +119,7 @@ class MapPage extends Component {
         this.map.getBounds().getSouthWest(),
       );
     const { queryVariables } = this.state;
-    const radiusToSet = Math.ceil(radius * 1.5);
+    const radiusToSet = Math.ceil(radius / 2.3);
 
     this.setState({
       queryVariables: {
@@ -183,7 +182,7 @@ class MapPage extends Component {
 
   render() {
     const { latitude, longitude } = this.props;
-    const { markerTypes, queryVariables } = this.state;
+    const { markerTypes } = this.state;
     const userFilter = !!this.state.queryVariables.userId;
 
     return (
@@ -194,7 +193,7 @@ class MapPage extends Component {
           markerTypes={markerTypes}
           onTypesChange={this.handleTypesFilter}
         />
-        <BottomDrawer latitude={latitude} longitude={longitude} />
+
         <GoogleMap
           defaultZoom={16}
           options={{ fullscreenControl: false, minZoom: 12, streetViewControl: false }}
@@ -210,11 +209,10 @@ class MapPage extends Component {
             animation={window.google.maps.Animation.DROP}
             icon={PersonPinSVG}
           />
-
           <QueryRenderer
             environment={environment}
-            query={MapPageQuery}
-            variables={queryVariables}
+            query={ReportPageQuery}
+            variables={this.state.queryVariables}
             render={({ error, props }) => {
             let markers = [];
             if (props && props.markers && props.markers.edges) {
@@ -230,10 +228,15 @@ class MapPage extends Component {
                 }}
               />);
             } else if (props) {
-                return <MarkerClusters markers={markers} />;
+              return (
+                <div>
+                  <MarkerClusters markers={markers} />
+                  <MarkersList markers={markers} />
+                </div>
+              );
             }
             return (
-              <div className={MapPageStyles.loader}>
+              <div className={ReportPageStyles.loader}>
                 <i className="fas fa-spinner fa-pulse fa-2x" />
               </div>
             );
@@ -255,4 +258,4 @@ export default compose(
   withGeolocation,
   withScriptjs,
   withGoogleMap,
-)(MapPage);
+)(ReportPage);
