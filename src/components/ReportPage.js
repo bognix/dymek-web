@@ -7,7 +7,6 @@ import {
 } from 'react-relay';
 import Snackbar from 'material-ui/Snackbar';
 
-import MarkerClusters from './MarkerClusters';
 import PersonPin from '../svgs/personPin';
 import withGeolocation from '../hocs/withGeolocation';
 import { COLORS, COLOR_ERROR } from '../theme';
@@ -15,7 +14,7 @@ import MarkersFilters from './MarkersFilters';
 import environment from '../relayEnvironment';
 import storage from '../storage';
 import { MARKER_TYPES } from '../consts';
-import MarkersList from './MarkersList';
+import ReportsList from './ReportsList';
 
 import ReportPageStyles from '../styles/ReportPage.sass';
 
@@ -27,11 +26,12 @@ const PersonPinSVG = {
 };
 
 const ReportPageQuery = graphql`
-  query ReportPageQuery($location: QueryRadius, $userId: ID, $types: [String]) {
-      markers(location: $location, userId: $userId, types: $types, first: 100) @connection(key: "ReportPage_markers", filters: []) {
+  query ReportPageQuery($location: QueryRadius) {
+      reports(location: $location, first: 100) @connection(key: "ReportPage_reports", filters: []) {
         edges {
-          marker: node {
+          report: node {
             createdAt,
+            updatedAt,
             geoJson {
               latitude,
               longitude
@@ -214,9 +214,9 @@ class ReportPage extends Component {
             query={ReportPageQuery}
             variables={this.state.queryVariables}
             render={({ error, props }) => {
-            let markers = [];
-            if (props && props.markers && props.markers.edges) {
-              markers = props.markers.edges;
+            let reports = [];
+            if (props && props.reports && props.reports.edges) {
+              reports = props.reports.edges;
             }
             if (error) {
               return (<Snackbar
@@ -230,8 +230,7 @@ class ReportPage extends Component {
             } else if (props) {
               return (
                 <div>
-                  <MarkerClusters markers={markers} />
-                  <MarkersList markers={markers} />
+                  <ReportsList reports={reports} />
                 </div>
               );
             }

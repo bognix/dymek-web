@@ -15,7 +15,7 @@ import UpdateMarkerMutation from '../mutations/UpdateMarkerMutation';
 
 const tableHeaders = ['#', 'data', 'adres', 'typ zgłoszenia', 'status', 'akcje'];
 
-class MarkersList extends Component {
+class ReportsList extends Component {
   constructor(props) {
     super(props);
 
@@ -49,7 +49,7 @@ class MarkersList extends Component {
   }
 
   render() {
-    const { markers } = this.props;
+    const { reports } = this.props;
     const { saved, error } = this.state;
 
     return (
@@ -63,32 +63,32 @@ class MarkersList extends Component {
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
-            {markers.map((item, index) => (
-              <TableRow key={item.marker.id} selectable={false}>
+            {reports.map((item, index) => (
+              <TableRow key={item.report.id} selectable={false}>
                 <TableRowColumn>{index}</TableRowColumn>
-                <TableRowColumn>{item.marker.createdAt}</TableRowColumn>
+                <TableRowColumn>{item.report.createdAt}</TableRowColumn>
                 <TableRowColumn>bla bla</TableRowColumn>
-                <TableRowColumn>{item.marker.type}</TableRowColumn>
-                <TableRowColumn>{item.marker.status}</TableRowColumn>
+                <TableRowColumn>{item.report.type}</TableRowColumn>
+                <TableRowColumn>{item.report.status}</TableRowColumn>
                 <TableRowColumn>
                   <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: 350 }}>
                     <RaisedButton
                       label="Rozwiąż"
                       backgroundColor={COLOR_SUCCESS}
                       labelColor={COLORS.alternateTextColor}
-                      onClick={() => this.changeStatus(item.marker.id, 'RESOLVED')}
+                      onClick={() => this.changeStatus(item.report.id, 'RESOLVED')}
                     />
                     <RaisedButton
                       label="Przyjmij"
                       backgroundColor={COLOR_WARN}
                       labelColor={COLORS.alternateTextColor}
-                      onClick={() => this.changeStatus(item.marker.id, 'ACKNOWLEDGED')}
+                      onClick={() => this.changeStatus(item.report.id, 'ACKNOWLEDGED')}
                     />
                     <RaisedButton
                       label="Odrzuć"
                       backgroundColor={COLOR_ERROR}
                       labelColor={COLORS.alternateTextColor}
-                      onClick={() => this.changeStatus(item.marker.id, 'REJECTED')}
+                      onClick={() => this.changeStatus(item.report.id, 'REJECTED')}
                     />
                   </div>
                 </TableRowColumn>
@@ -110,4 +110,4 @@ class MarkersList extends Component {
   }
 }
 
-export default MarkersList;
+export default ReportsList;

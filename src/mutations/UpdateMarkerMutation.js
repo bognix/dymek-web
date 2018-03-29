@@ -15,7 +15,6 @@ const mutation = graphql`
             latitude,
             longitude
           },
-          status
         }
       }
     }

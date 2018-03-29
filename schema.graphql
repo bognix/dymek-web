@@ -1,5 +1,5 @@
 # source: http://localhost:3000/api/q
-# timestamp: Wed Mar 21 2018 19:50:46 GMT+0100 (CET)
+# timestamp: Thu Mar 29 2018 18:20:28 GMT+0200 (CEST)
 
 schema {
   query: Root
@@ -31,7 +31,7 @@ type Marker implements Node {
   geoJson: geo
   hashKey: String
   geoHash: String
-  status: String
+  reportId: String
 }
 
 """A connection to a list of items."""
@@ -85,8 +85,36 @@ input QueryRadius {
   longitude: Float
 }
 
+type Report {
+  id: ID
+  status: String
+  type: String
+  geoJson: geo
+  createdAt: String
+  updatedAt: String
+}
+
+"""A connection to a list of items."""
+type ReportConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ReportEdge]
+}
+
+"""An edge in a connection."""
+type ReportEdge {
+  """The item at the end of the edge"""
+  node: Report
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
 type Root {
   markers(userId: ID, types: [String], location: QueryRadius, after: String, first: Int, before: String, last: Int): MarkerConnection
+  reports(location: QueryRadius, types: [String], after: String, first: Int, before: String, last: Int): ReportConnection
 
   """Fetches an object given its ID"""
   node(
@@ -96,7 +124,6 @@ type Root {
 }
 
 input UpdateMarkerInput {
-  status: String
   id: ID
   clientMutationId: String
 }
