@@ -4,15 +4,15 @@
 	"InitializationTime": "2018-02-20-12-09-26",
 	"LastConfigurationTime": "2018-02-20-12-09-31",
 	"LastNPMInstallTime": "2018-03-23-08-22-16",
-	"FrontendLastBuildTime": "2018-03-25-19-32-42",
-	"LastPublishTime": "2018-03-25-19-32-44",
-	"BackendLastSyncTime": "2018-03-25-19-32-15",
-	"BackendLastBuildTime": "2018-03-25-19-31-58",
-	"BackendLastPushTime": "2018-03-25-19-32-02",
+	"FrontendLastBuildTime": "2018-03-26-09-12-25",
+	"LastPublishTime": "2018-03-26-09-12-33",
+	"BackendLastSyncTime": "2018-03-26-09-12-02",
+	"BackendLastBuildTime": "2018-03-26-09-11-45",
+	"BackendLastPushTime": "2018-03-26-09-11-48",
 	"BackendLastPushSuccessful": true,
 	"BackendProjectID": "8c6d73a3-162e-11e8-8579-61249e9e72d2",
 	"BackendProjectName": "dymek-web",
 	"BackendProjectConsoleUrl": "https://console.aws.amazon.com/mobilehub/home#/8c6d73a3-162e-11e8-8579-61249e9e72d2/build",
 	"BackendProjectCreationTime": "2018-02-20T11:09:41.627Z",
-	"BackendProjectLastUpdatedTime": "2018-03-25T17:32:02.529Z"
+	"BackendProjectLastUpdatedTime": "2018-03-26T07:11:47.716Z"
 }

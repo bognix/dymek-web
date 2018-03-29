@@ -23,6 +23,15 @@ class MarkersList extends Component {
       saved: false,
       error: false,
     };
+
+    this.onSnackbarClosed = this.onSnackbarClosed.bind(this);
+  }
+
+  onSnackbarClosed() {
+    this.setState({
+      saved: false,
+      error: false,
+    });
   }
 
   changeStatus(id, status) {
@@ -33,8 +42,8 @@ class MarkersList extends Component {
       });
     }, () => {
       this.setState({
-        error: false,
-        saved: false,
+        error: true,
+        saved: true,
       });
     });
   }
@@ -94,6 +103,7 @@ class MarkersList extends Component {
           bodyStyle={{
             backgroundColor: error ? COLOR_ERROR : COLOR_SUCCESS,
           }}
+          onRequestClose={this.onSnackbarClosed}
         />
       </div>
     );
