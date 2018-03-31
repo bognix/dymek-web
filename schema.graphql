@@ -1,5 +1,5 @@
 # source: http://localhost:3000/api/q
-# timestamp: Thu Mar 29 2018 18:20:28 GMT+0200 (CEST)
+# timestamp: Sat Mar 31 2018 18:00:47 GMT+0200 (CEST)
 
 schema {
   query: Root
@@ -25,13 +25,16 @@ type geo {
 
 type Marker implements Node {
   id: ID!
+
+  """The ID of an object"""
+  globalId: ID!
   createdAt: String
   user: User
   type: String
   geoJson: geo
   hashKey: String
   geoHash: String
-  reportId: String
+  report: Report
 }
 
 """A connection to a list of items."""
@@ -55,7 +58,7 @@ type MarkerEdge {
 type Mutation {
   createMarker(input: CreateMarkerInput!): CreateMarkerPayload
   updateOrCreateUser(input: UpdateOrCreateUserInput!): UpdateOrCreateUserPayload
-  updateMarker(input: UpdateMarkerInput!): UpdateMarkerPayload
+  updateReport(input: UpdateReportInput!): UpdateReportPayload
 }
 
 """An object with an ID"""
@@ -85,13 +88,18 @@ input QueryRadius {
   longitude: Float
 }
 
-type Report {
-  id: ID
+type Report implements Node {
+  id: ID!
   status: String
   type: String
   geoJson: geo
   createdAt: String
+  hashKey: Int
   updatedAt: String
+  markers: [Marker]
+
+  """The ID of an object"""
+  globalId: ID!
 }
 
 """A connection to a list of items."""
@@ -123,16 +131,6 @@ type Root {
   ): Node
 }
 
-input UpdateMarkerInput {
-  id: ID
-  clientMutationId: String
-}
-
-type UpdateMarkerPayload {
-  markerEdge: MarkerEdge
-  clientMutationId: String
-}
-
 input UpdateOrCreateUserInput {
   registrationToken: String
   clientMutationId: String
@@ -140,6 +138,17 @@ input UpdateOrCreateUserInput {
 
 type UpdateOrCreateUserPayload {
   user: User
+  clientMutationId: String
+}
+
+input UpdateReportInput {
+  id: ID
+  status: String
+  clientMutationId: String
+}
+
+type UpdateReportPayload {
+  reportEdge: ReportEdge
   clientMutationId: String
 }
 

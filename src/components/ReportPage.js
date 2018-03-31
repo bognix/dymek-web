@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+import { MAP } from 'react-google-maps/lib/constants';
 import { compose, withProps } from 'recompose';
 import {
   QueryRenderer,
@@ -89,6 +90,11 @@ class ReportPage extends Component {
           longitude,
         },
       },
+    });
+
+    this.map.context[MAP].setCenter({
+      lat: latitude,
+      lng: longitude,
     });
   }
 
@@ -230,6 +236,19 @@ class ReportPage extends Component {
             } else if (props) {
               return (
                 <div>
+                  {reports.map((item, index) => (
+                    <Marker
+                      key={item.report.id}
+                      position={
+                        {
+                          lat: item.report.geoJson.latitude + (0.00005 * index),
+                          lng: item.report.geoJson.longitude,
+                        }
+                      }
+                      title="Jesteś tutaj"
+                      animation={window.google.maps.Animation.DROP}
+                    />))
+                  };
                   <ReportsList reports={reports} />
                 </div>
               );

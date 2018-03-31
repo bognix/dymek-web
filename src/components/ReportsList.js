@@ -11,7 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 
 import { COLOR_ERROR, COLOR_SUCCESS, COLOR_WARN, COLORS } from '../theme';
-import UpdateMarkerMutation from '../mutations/UpdateMarkerMutation';
+import UpdateReportMutation from '../mutations/UpdateReportMutation';
 
 const tableHeaders = ['#', 'data', 'adres', 'typ zgłoszenia', 'status', 'akcje'];
 
@@ -35,7 +35,7 @@ class ReportsList extends Component {
   }
 
   changeStatus(id, status) {
-    UpdateMarkerMutation.commit({ status, id }, () => {
+    UpdateReportMutation.commit({ status, id }, () => {
       this.setState({
         saved: true,
         error: false,

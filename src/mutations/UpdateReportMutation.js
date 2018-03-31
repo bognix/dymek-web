@@ -6,15 +6,12 @@ import {
 import environment from '../relayEnvironment';
 
 const mutation = graphql`
-  mutation UpdateMarkerMutation($input: UpdateMarkerInput!) {
-    updateMarker(input:$input) {
-      markerEdge {
+  mutation UpdateReportMutation($input: UpdateReportInput!) {
+    updateReport(input:$input) {
+      reportEdge {
         cursor
         node {
-          geoJson {
-            latitude,
-            longitude
-          },
+          status
         }
       }
     }
