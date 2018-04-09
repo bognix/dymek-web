@@ -36,7 +36,7 @@ class Navbar extends React.Component {
     return (
       <div>
         <AppBar
-          title="Dymek Web App"
+          title="Masz Wpływ"
           iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonClick={this.handleToggle}
           onTitleClick={this.onTitleClick}

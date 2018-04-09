@@ -4,7 +4,6 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 
 import MapPage from './components/MapPage';
 import ReportPage from './components/ReportPage';
-import Main from './components/Main';
 import Navbar from './components/Navbar';
 import NotFound from './components/NotFound';
 import storage from './storage';
@@ -22,8 +21,7 @@ export default () => (
     <div className={AppStyles.App}>
       <Navbar />
       <Switch>
-        <Route exact path="/" component={Main} />
-        <Route exact path="/map" component={MapPage} />
+        <Route exact path="/" component={MapPage} />
         <Route exact path="/report" component={ReportPage} />
         <Route component={NotFound} />
       </Switch>

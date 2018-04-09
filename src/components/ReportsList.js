@@ -13,7 +13,20 @@ import Snackbar from 'material-ui/Snackbar';
 import { COLOR_ERROR, COLOR_SUCCESS, COLOR_WARN, COLORS } from '../theme';
 import UpdateReportMutation from '../mutations/UpdateReportMutation';
 
-const tableHeaders = ['#', 'data', 'adres', 'typ zgłoszenia', 'status', 'akcje'];
+const tableHeaders = ['#', 'pierwsze zgłoszenie', 'ostatnie zgłoszenie', 'typ zgłoszenia', 'status', 'akcje'];
+
+const STATUS_NAMES = {
+  RESOLVED: 'Rozwiązane',
+  ACKNOWLEDGED: 'Przyjęte',
+  REJECTED: 'Odrzucone',
+  NEW: 'Nowe',
+};
+
+const TYPES_NAMES = {
+  ILLEGAL_PARKING: 'Brak miejsc parkingowych',
+  DOG_POOP: 'Zanieczyszczona przestrzeń',
+  CHIMNEY_SMOKE: 'Uszkodzona nawierzchnia',
+};
 
 class ReportsList extends Component {
   constructor(props) {
@@ -67,9 +80,9 @@ class ReportsList extends Component {
               <TableRow key={item.report.id} selectable={false}>
                 <TableRowColumn>{index}</TableRowColumn>
                 <TableRowColumn>{item.report.createdAt}</TableRowColumn>
-                <TableRowColumn>bla bla</TableRowColumn>
-                <TableRowColumn>{item.report.type}</TableRowColumn>
-                <TableRowColumn>{item.report.status}</TableRowColumn>
+                <TableRowColumn>{item.report.updatedAt}</TableRowColumn>
+                <TableRowColumn>{TYPES_NAMES[item.report.type]}</TableRowColumn>
+                <TableRowColumn>{STATUS_NAMES[item.report.status]}</TableRowColumn>
                 <TableRowColumn>
                   <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: 350 }}>
                     <RaisedButton
@@ -98,7 +111,7 @@ class ReportsList extends Component {
         </Table>
         <Snackbar
           open={saved}
-          message={error ? 'Nie udało się zapisać zmiany :( Spróbuj ponownie' : 'Dziękujemy za ogarnięcie sprawy!'}
+          message={error ? 'Nie udało się zapisać zmiany :( Spróbuj ponownie' : 'Dziękujemy za pomoc!'}
           autoHideDuration={4000}
           bodyStyle={{
             backgroundColor: error ? COLOR_ERROR : COLOR_SUCCESS,

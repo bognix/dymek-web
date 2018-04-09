@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import Pets from 'material-ui/svg-icons/action/pets';
 import Parking from 'material-ui/svg-icons/maps/local-parking';
-import Smoke from 'material-ui/svg-icons/places/smoking-rooms';
+import Terrain from 'material-ui/svg-icons/maps/terrain';
 import Done from 'material-ui/svg-icons/action/done';
 
 import AddMarker from './AddMarker';
@@ -15,25 +15,25 @@ class BottomDrawer extends Component {
     this.state = {
       markerTypes: {
         DOG_POOP: {
-          title: 'Zgłoś Kupkę',
-          titleSuccess: 'Dziękujemy za zgłoszenie kupki w Twojej okolicy!',
+          title: 'Zanieczyszczona przestrzeń',
+          titleSuccess: 'Dziękujemy za zgłoszenie!',
           icon: <Pets className={BottomDrawerStyles.icon} />,
           iconSuccess: <Done className={BottomDrawerStyles['icon-success']} />,
           value: 'DOG_POOP',
           canPost: true,
         },
         ILLEGAL_PARKING: {
-          title: 'Zgłoś Nielegalne Parkowanie',
-          titleSuccess: 'Dziękujemy za zgłoszenie nielegalnego parkowania w Twojej okolicy!',
+          title: 'Brak miejsc parkingowych',
+          titleSuccess: 'Dziękujemy za zgłoszenie!',
           icon: <Parking className={BottomDrawerStyles.icon} />,
           iconSuccess: <Done className={BottomDrawerStyles['icon-success']} />,
           value: 'ILLEGAL_PARKING',
           canPost: true,
         },
         CHIMNEY_SMOKE: {
-          title: 'Zgłoś Smród z komina',
-          titleSuccess: 'Dziękujemy za zgłoszenie smrodu z komina w Twojej okolicy!',
-          icon: <Smoke className={BottomDrawerStyles.icon} />,
+          title: 'Dziury w nawierzchni',
+          titleSuccess: 'Dziękujemy za zgłoszenie!',
+          icon: <Terrain className={BottomDrawerStyles.icon} />,
           iconSuccess: <Done className={BottomDrawerStyles['icon-success']} />,
           value: 'CHIMNEY_SMOKE',
           canPost: true,
