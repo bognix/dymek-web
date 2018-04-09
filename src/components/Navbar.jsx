@@ -48,7 +48,7 @@ class Navbar extends React.Component {
           docked={false}
           onRequestChange={open => this.setState({ open })}
         >
-          <NavLink to="/map" className="ml1 no-underline black" onClick={this.handleClose}>
+          <NavLink to="/" className="ml1 no-underline black" onClick={this.handleClose}>
             <MenuItem>Mapa</MenuItem>
           </NavLink>
           <NavLink to="/report" className="ml1 no-underline black" onClick={this.handleClose}>
