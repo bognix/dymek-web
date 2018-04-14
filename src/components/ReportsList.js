@@ -13,7 +13,7 @@ import Snackbar from 'material-ui/Snackbar';
 import { COLOR_ERROR, COLOR_SUCCESS, COLOR_WARN, COLORS } from '../theme';
 import UpdateReportMutation from '../mutations/UpdateReportMutation';
 
-const tableHeaders = ['#', 'pierwsze zgłoszenie', 'ostatnie zgłoszenie', 'typ zgłoszenia', 'status', 'akcje'];
+const tableHeaders = ['#', 'pierwsze zgłoszenie', 'ostatnie zgłoszenie', 'typ zgłoszenia', 'ilość zgłoszeń', 'status', 'akcje'];
 
 const STATUS_NAMES = {
   RESOLVED: 'Rozwiązane',
@@ -66,8 +66,8 @@ class ReportsList extends Component {
     const { saved, error } = this.state;
 
     return (
-      <div>
-        <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto' }}>
+      <div style={{ overflowX: 'auto' }}>
+        <Table fixedHeader={false} style={{ width: '100%', tableLayout: 'auto', overflow: 'scroll' }}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false} fixedHeader={false}>
             <TableRow selectable={false}>
               {tableHeaders.map(header => (
@@ -75,13 +75,14 @@ class ReportsList extends Component {
             ))}
             </TableRow>
           </TableHeader>
-          <TableBody displayRowCheckbox={false}>
+          <TableBody displayRowCheckbox={false} showRowHover>
             {reports.map((item, index) => (
               <TableRow key={item.report.id} selectable={false}>
-                <TableRowColumn>{index}</TableRowColumn>
+                <TableRowColumn>{index + 1}</TableRowColumn>
                 <TableRowColumn>{item.report.createdAt}</TableRowColumn>
                 <TableRowColumn>{item.report.updatedAt}</TableRowColumn>
                 <TableRowColumn>{TYPES_NAMES[item.report.type]}</TableRowColumn>
+                <TableRowColumn>{item.report.markers.total}</TableRowColumn>
                 <TableRowColumn>{STATUS_NAMES[item.report.status]}</TableRowColumn>
                 <TableRowColumn>
                   <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: 350 }}>

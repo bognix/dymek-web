@@ -39,7 +39,10 @@ const ReportPageQuery = graphql`
             },
             id
             type,
-            status
+            status,
+            markers {
+              total
+            }
           }
         }
       }

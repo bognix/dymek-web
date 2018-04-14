@@ -1,5 +1,5 @@
 # source: http://localhost:3000/api/q
-# timestamp: Sat Mar 31 2018 18:00:47 GMT+0200 (CEST)
+# timestamp: Sat Apr 14 2018 08:28:40 GMT+0200 (CEST)
 
 schema {
   query: Root
@@ -44,6 +44,9 @@ type MarkerConnection {
 
   """A list of edges."""
   edges: [MarkerEdge]
+
+  """Total number of items"""
+  total: Int
 }
 
 """An edge in a connection."""
@@ -96,7 +99,7 @@ type Report implements Node {
   createdAt: String
   hashKey: Int
   updatedAt: String
-  markers: [Marker]
+  markers: MarkerConnection
 
   """The ID of an object"""
   globalId: ID!
