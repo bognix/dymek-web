@@ -8,6 +8,7 @@ import {
   graphql,
 } from 'react-relay';
 import Snackbar from 'material-ui/Snackbar';
+import { MAP } from 'react-google-maps/lib/constants';
 
 import MarkerClusters from './MarkerClusters';
 import BottomDrawer from './BottomDrawer';
@@ -90,6 +91,11 @@ class MapPage extends Component {
           longitude,
         },
       },
+    });
+
+    this.map.context[MAP].setCenter({
+      lat: latitude,
+      lng: longitude,
     });
   }
 
