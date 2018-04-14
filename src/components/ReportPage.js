@@ -41,7 +41,9 @@ const ReportPageQuery = graphql`
             type,
             status,
             markers {
-              total
+              total,
+              lastCreate,
+              firstCreate
             }
           }
         }

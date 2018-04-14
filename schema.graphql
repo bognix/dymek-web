@@ -1,5 +1,5 @@
 # source: http://localhost:3000/api/q
-# timestamp: Sat Apr 14 2018 08:28:40 GMT+0200 (CEST)
+# timestamp: Sat Apr 14 2018 08:41:43 GMT+0200 (CEST)
 
 schema {
   query: Root
@@ -47,6 +47,12 @@ type MarkerConnection {
 
   """Total number of items"""
   total: Int
+
+  """Date of creation of the first item"""
+  firstCreate: String
+
+  """Date of creation of the last item"""
+  lastCreate: String
 }
 
 """An edge in a connection."""

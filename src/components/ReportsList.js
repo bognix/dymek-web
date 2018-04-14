@@ -79,8 +79,8 @@ class ReportsList extends Component {
             {reports.map((item, index) => (
               <TableRow key={item.report.id} selectable={false}>
                 <TableRowColumn>{index + 1}</TableRowColumn>
-                <TableRowColumn>{item.report.createdAt}</TableRowColumn>
-                <TableRowColumn>{item.report.updatedAt}</TableRowColumn>
+                <TableRowColumn>{item.report.markers.firstCreate}</TableRowColumn>
+                <TableRowColumn>{item.report.markers.lastCreate}</TableRowColumn>
                 <TableRowColumn>{TYPES_NAMES[item.report.type]}</TableRowColumn>
                 <TableRowColumn>{item.report.markers.total}</TableRowColumn>
                 <TableRowColumn>{STATUS_NAMES[item.report.status]}</TableRowColumn>
